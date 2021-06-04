@@ -5,7 +5,7 @@
  * @version 1.7.0
  * @since   1.2.0
  *
- * @author  Algoritmika Ltd.
+ * @author  WPFactory
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -33,7 +33,7 @@ class Alg_Download_Plugins_Settings {
 	 * @version 1.4.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [dev] remove `$_GET` (i.e. hook to `admin_notices` directly)
+	 * @todo    [later] (dev) remove `$_GET` (i.e. hook to `admin_notices` directly)
 	 */
 	function admin_notices() {
 		if ( isset( $_GET['alg_download_plugin_bulk_finished'] ) ) {
@@ -409,6 +409,8 @@ class Alg_Download_Plugins_Settings {
 	 *
 	 * @version 1.2.0
 	 * @since   1.2.0
+	 *
+	 * @todo    [now] (dev) rewrite
 	 */
 	function get_table_html( $data, $args = array() ) {
 		$defaults = array(
@@ -430,10 +432,9 @@ class Alg_Download_Plugins_Settings {
 		foreach( $data as $row_number => $row ) {
 			$html .= '<tr' . $row_styles . '>';
 			foreach( $row as $column_number => $value ) {
-				$th_or_td = ( ( 0 === $row_number && 'horizontal' === $table_heading_type ) || ( 0 === $column_number && 'vertical' === $table_heading_type ) ) ? 'th' : 'td';
+				$th_or_td     = ( ( 0 === $row_number && 'horizontal' === $table_heading_type ) || ( 0 === $column_number && 'vertical' === $table_heading_type ) ) ? 'th' : 'td';
 				$column_class = ( ! empty( $columns_classes ) && isset( $columns_classes[ $column_number ] ) ) ? ' class="' . $columns_classes[ $column_number ] . '"' : '';
 				$column_style = ( ! empty( $columns_styles ) && isset( $columns_styles[ $column_number ] ) ) ? ' style="' . $columns_styles[ $column_number ] . '"' : '';
-
 				$html .= '<' . $th_or_td . $column_class . $column_style . '>';
 				$html .= $value;
 				$html .= '</' . $th_or_td . '>';

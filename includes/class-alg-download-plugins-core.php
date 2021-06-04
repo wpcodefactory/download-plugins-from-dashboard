@@ -5,7 +5,7 @@
  * @version 1.7.1
  * @since   1.2.0
  *
- * @author  Algoritmika Ltd.
+ * @author  WPFactory
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -20,10 +20,10 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.4.0
 	 * @since   1.2.0
 	 *
-	 * @todo    [dev] add nonces
-	 * @todo    [feature] add "Download plugin" to "Bulk Actions" select box on "Plugins" page
-	 * @todo    [feature] add "Download active / inactive / recently active plugins" (to browser and periodically)
-	 * @todo    [feature] add "Download active theme only" (periodically)
+	 * @todo    [later] (dev) add nonces
+	 * @todo    [later] (feature) add "Download plugin" to "Bulk Actions" select box on "Plugins" page
+	 * @todo    [later] (feature) add "Download active / inactive / recently active plugins" (to browser and periodically)
+	 * @todo    [later] (feature) add "Download active theme only" (periodically)
 	 */
 	function __construct() {
 		// Links
@@ -53,7 +53,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.7.1
 	 * @since   1.1.0
 	 *
-	 * @todo    [dev] add links to each theme's "Theme Details"
+	 * @todo    [later] (dev) add links to each theme's "Theme Details"
 	 */
 	function add_theme_download_links() {
 		wp_enqueue_script(  'alg-theme-download-links',
@@ -92,7 +92,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.7.0
 	 * @since   1.7.0
 	 *
-	 * @todo    [dev] (maybe) check `open_basedir` for `is_writable()`
+	 * @todo    [maybe] (dev) check `open_basedir` for `is_writable()`
 	 */
 	function get_sys_temp_dir() {
 		$dir = sys_get_temp_dir();
@@ -158,8 +158,8 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.5.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [dev] `mustuse` and `dropins`
-	 * @todo    [dev] `$is_cron` is not used?
+	 * @todo    [later] (dev) `mustuse` and `dropins`
+	 * @todo    [later] (dev) `$is_cron` is not used?
 	 */
 	function download_plugin_all( $is_cron = false ) {
 		if ( isset( $_GET['alg_download_plugin_all'] ) && is_user_logged_in() && current_user_can( 'activate_plugins' )  ) {
@@ -285,9 +285,9 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.4.1
 	 * @since   1.4.0
 	 *
-	 * @todo    [dev] rethink `if ( ! $this->create_zip() )`
-	 * @todo    [dev] maybe use temp dir for `'all' === $output_files`
-	 * @todo    [dev] maybe just download `$plugin_or_theme_dir` for `in_array( $output_files, array( 'all', 'both' ) )` (instead of using `$final_zip_files`)
+	 * @todo    [later] (dev) rethink `if ( ! $this->create_zip() )`
+	 * @todo    [later] (dev) maybe use temp dir for `'all' === $output_files`
+	 * @todo    [later] (dev) maybe just download `$plugin_or_theme_dir` for `in_array( $output_files, array( 'all', 'both' ) )` (instead of using `$final_zip_files`)
 	 */
 	function download_plugin_or_theme_bulk( $plugin_or_theme_dir, $plugins_or_themes, $add_main_dir, $do_add_download_time, $output_files, $all_file_name, $destination_path ) {
 		if ( ! $this->check_system_requirements() ) {
@@ -363,8 +363,8 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.5.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [dev] `mustuse` and `dropins`
-	 * @todo    [dev] single file plugins
+	 * @todo    [later] (dev) `mustuse` and `dropins`
+	 * @todo    [later] (dev) single file plugins
 	 */
 	function download_plugin_bulk( $is_cron = false ) {
 		if ( $is_cron || ( isset( $_GET['alg_download_plugin_bulk'] ) && is_user_logged_in() && current_user_can( 'activate_plugins' ) ) ) {
@@ -401,7 +401,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.4.0
 	 * @since   1.1.0
 	 *
-	 * @todo    [dev] extra validation (i.e. check for `$theme_name` in `wp_get_themes()`)
+	 * @todo    [later] (dev) extra validation (i.e. check for `$theme_name` in `wp_get_themes()`)
 	 */
 	function download_theme() {
 		if ( isset( $_GET['alg_download_theme'] ) && is_user_logged_in() && current_user_can( 'switch_themes' ) ) {
@@ -426,7 +426,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.5.0
 	 * @since   1.5.0
 	 *
-	 * @todo    [dev] recheck if we really need `require_once( ABSPATH . 'wp-admin/includes/plugin.php' )`
+	 * @todo    [later] (dev) recheck if we really need `require_once( ABSPATH . 'wp-admin/includes/plugin.php' )`
 	 */
 	function get_plugins( $status = false ) {
 		if ( ! $status ) {
@@ -545,7 +545,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.5.0
 	 * @since   1.1.0
 	 *
-	 * @todo    [dev] recheck if themes can be single file (i.e. `$is_dir = false`)
+	 * @todo    [later] (dev) recheck if themes can be single file (i.e. `$is_dir = false`)
 	 */
 	function download_plugin_or_theme( $plugin_or_theme_dir, $plugin_or_theme_name, $version, $add_main_dir, $is_dir = true ) {
 		if ( ! $this->check_system_requirements() ) {
@@ -608,7 +608,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.4.1
 	 * @since   1.3.0
 	 *
-	 * @todo    [dev] (maybe) check `new ZipArchive`, `$zip->addFile`, `$zip->close` for errors
+	 * @todo    [maybe] (dev) check `new ZipArchive`, `$zip->addFile`, `$zip->close` for errors
 	 */
 	function create_zip_ziparchive( $args, $files ) {
 		$zip = new ZipArchive();
@@ -633,7 +633,7 @@ class Alg_Download_Plugins_Core {
 	 *
 	 * @see     http://www.phpconcept.net/pclzip
 	 *
-	 * @todo    [dev] (maybe) check `new PclZip` for errors
+	 * @todo    [maybe] (dev) check `new PclZip` for errors
 	 */
 	function create_zip_pclzip( $args, $files ) {
 		require_once( ABSPATH . 'wp-admin/includes/class-pclzip.php' );
@@ -651,7 +651,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.4.0
 	 * @since   1.3.0
 	 *
-	 * @todo    [dev] two times "Content-Type"?
+	 * @todo    [later] (dev) two times "Content-Type"?
 	 */
 	function send_file( $zip_file_name, $zip_file_path ) {
 		header( 'Content-Type: application/octet-stream' );

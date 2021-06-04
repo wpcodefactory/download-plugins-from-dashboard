@@ -1,9 +1,9 @@
 === Download Plugins and Themes from Dashboard ===
-Contributors: algoritmika, anbinder
+Contributors: wpcodefactory
 Tags: download, plugin, theme, zip, dashboard
 Requires at least: 3.1
-Tested up to: 5.6
-Stable tag: 1.7.1
+Tested up to: 5.7
+Stable tag: 1.7.2
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -43,6 +43,10 @@ Also there are "Download all" plugins and/or themes tools in "Settings > Downloa
 3. Settings.
 
 == Changelog ==
+
+= 1.7.2 - 04/06/2021 =
+* Tested up to: 5.7.
+* Plugin author updated.
 
 = 1.7.1 - 15/02/2021 =
 * Dev - JS file minified.

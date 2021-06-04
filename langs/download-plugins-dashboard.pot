@@ -1,8 +1,8 @@
-#: download-plugins-from-dashboard.php:137
+#: download-plugins-from-dashboard.php:136
 msgid "Settings"
 msgstr ""
 
-#: download-plugins-from-dashboard.php:140
+#: download-plugins-from-dashboard.php:139
 msgid "Go Pro"
 msgstr ""
 
