@@ -2,13 +2,13 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.7.0
+ * @version 1.8.0
  * @since   1.2.0
  *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_Download_Plugins_Settings' ) ) :
 
@@ -33,7 +33,7 @@ class Alg_Download_Plugins_Settings {
 	 * @version 1.4.0
 	 * @since   1.4.0
 	 *
-	 * @todo    [later] (dev) remove `$_GET` (i.e. hook to `admin_notices` directly)
+	 * @todo    [later] (dev) remove `$_GET` (i.e. hook to `admin_notices` directly)?
 	 */
 	function admin_notices() {
 		if ( isset( $_GET['alg_download_plugin_bulk_finished'] ) ) {
@@ -407,10 +407,8 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * get_table_html.
 	 *
-	 * @version 1.2.0
+	 * @version 1.8.0
 	 * @since   1.2.0
-	 *
-	 * @todo    [now] (dev) rewrite
 	 */
 	function get_table_html( $data, $args = array() ) {
 		$defaults = array(
@@ -421,23 +419,22 @@ class Alg_Download_Plugins_Settings {
 			'columns_classes'    => array(),
 			'columns_styles'     => array(),
 		);
-		$args = array_merge( $defaults, $args );
-		extract( $args );
-		$table_class = ( '' == $table_class ) ? '' : ' class="' . $table_class . '"';
-		$table_style = ( '' == $table_style ) ? '' : ' style="' . $table_style . '"';
-		$row_styles  = ( '' == $row_styles )  ? '' : ' style="' . $row_styles  . '"';
-		$html = '';
-		$html .= '<table' . $table_class . $table_style . '>';
-		$html .= '<tbody>';
+		$args         = array_merge( $defaults, $args );
+		$table_class  = ( '' == $args['table_class'] ? '' : ' class="' . $args['table_class'] . '"' );
+		$table_style  = ( '' == $args['table_style'] ? '' : ' style="' . $args['table_style'] . '"' );
+		$row_styles   = ( '' == $args['row_styles']  ? '' : ' style="' . $args['row_styles']  . '"' );
+		$html         = '';
+		$html        .= '<table' . $table_class . $table_style . '>';
+		$html        .= '<tbody>';
 		foreach( $data as $row_number => $row ) {
 			$html .= '<tr' . $row_styles . '>';
 			foreach( $row as $column_number => $value ) {
-				$th_or_td     = ( ( 0 === $row_number && 'horizontal' === $table_heading_type ) || ( 0 === $column_number && 'vertical' === $table_heading_type ) ) ? 'th' : 'td';
-				$column_class = ( ! empty( $columns_classes ) && isset( $columns_classes[ $column_number ] ) ) ? ' class="' . $columns_classes[ $column_number ] . '"' : '';
-				$column_style = ( ! empty( $columns_styles ) && isset( $columns_styles[ $column_number ] ) ) ? ' style="' . $columns_styles[ $column_number ] . '"' : '';
-				$html .= '<' . $th_or_td . $column_class . $column_style . '>';
-				$html .= $value;
-				$html .= '</' . $th_or_td . '>';
+				$th_or_td      = ( ( 0 === $row_number && 'horizontal' === $args['table_heading_type'] ) || ( 0 === $column_number && 'vertical' === $args['table_heading_type'] ) ? 'th' : 'td' );
+				$column_class  = ( ! empty( $args['columns_classes'][ $column_number ] ) ? ' class="' . $args['columns_classes'][ $column_number ] . '"' : '' );
+				$column_style  = ( ! empty( $args['columns_styles'][ $column_number ] )  ? ' style="' . $args['columns_styles'][ $column_number ]  . '"' : '' );
+				$html         .= '<' . $th_or_td . $column_class . $column_style . '>';
+				$html         .= $value;
+				$html         .= '</' . $th_or_td . '>';
 			}
 			$html .= '</tr>';
 		}

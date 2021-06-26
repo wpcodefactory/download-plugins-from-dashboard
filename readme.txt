@@ -3,7 +3,7 @@ Contributors: wpcodefactory
 Tags: download, plugin, theme, zip, dashboard
 Requires at least: 3.1
 Tested up to: 5.7
-Stable tag: 1.7.2
+Stable tag: 1.8.0
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,16 +14,18 @@ Download installed plugins and themes ZIP files directly from your admin dashboa
 
 **Download Plugins and Themes from Dashboard** plugin lets you download installed plugins and themes ZIP files directly from your admin dashboard without using FTP.
 
-There are no required settings in plugin - after installation 'Download ZIP' links will be automatically added to all:
+There are no required settings in plugin - after installation **Download ZIP** links will be automatically added to all:
 
-* plugins to your *Plugins > Installed Plugins* menu, and
-* themes to your *Appearance > Themes* menu.
+* plugins - to your *Plugins > Installed Plugins* menu, and
+* themes - to your *Appearance > Themes* menu.
+
+Also there are **Download all** plugins and/or themes tools in "Settings > Download Plugins and Themes".
 
 Additionally in "Settings > Download Plugins and Themes" you can set if you want to append version number to ZIP filename, and/or if you want main plugin's or theme's directory to be included in ZIP.
 
-Also there are "Download all" plugins and/or themes tools in "Settings > Download Plugins and Themes".
+Advanced settings include selecting different ZIP libraries (ZipArchive or PclZip), and setting custom temporary directory on your server.
 
-[Pro version](https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/) has option to set periodical plugins and/or themes downloads.
+[Pro version](https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/) has option to set **periodical** plugins and/or themes **downloads**.
 
 = Feedback =
 
@@ -43,6 +45,12 @@ Also there are "Download all" plugins and/or themes tools in "Settings > Downloa
 3. Settings.
 
 == Changelog ==
+
+= 1.8.0 - 26/06/2021 =
+* Fix - Checking for the activated Pro plugin version correctly now.
+* Dev - "Send file" headers updated.
+* Dev - Code refactoring.
+* Description in readme.txt updated.
 
 = 1.7.2 - 04/06/2021 =
 * Tested up to: 5.7.

@@ -2,13 +2,13 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.7.1
+ * @version 1.8.0
  * @since   1.2.0
  *
  * @author  WPFactory
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Alg_Download_Plugins_Core' ) ) :
 
@@ -53,7 +53,7 @@ class Alg_Download_Plugins_Core {
 	 * @version 1.7.1
 	 * @since   1.1.0
 	 *
-	 * @todo    [later] (dev) add links to each theme's "Theme Details"
+	 * @todo    [later] (dev) add download links to each theme's "Theme Details"
 	 */
 	function add_theme_download_links() {
 		wp_enqueue_script(  'alg-theme-download-links',
@@ -648,16 +648,19 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * send_file.
 	 *
-	 * @version 1.4.0
+	 * @version 1.8.0
 	 * @since   1.3.0
 	 *
-	 * @todo    [later] (dev) two times "Content-Type"?
+	 * @see     https://stackoverflow.com/questions/11315951/using-the-browser-prompt-to-download-a-file
 	 */
 	function send_file( $zip_file_name, $zip_file_path ) {
 		header( 'Content-Type: application/octet-stream' );
 		header( 'Content-Disposition: attachment; filename=' . urlencode( $zip_file_name ) );
-		header( 'Content-Type: application/download' );
 		header( 'Content-Description: File Transfer' );
+		header( 'Content-Transfer-Encoding: binary' );
+		header( 'Expires: 0' );
+		header( 'Cache-Control: must-revalidate' );
+		header( 'Pragma: public' );
 		header( 'Content-Length: ' . filesize( $zip_file_path ) );
 		flush();
 		if ( false !== ( $fp = fopen( $zip_file_path, 'r' ) ) ) {

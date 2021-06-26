@@ -1,11 +1,3 @@
-#: download-plugins-from-dashboard.php:136
-msgid "Settings"
-msgstr ""
-
-#: download-plugins-from-dashboard.php:139
-msgid "Go Pro"
-msgstr ""
-
 #: includes/class-alg-download-plugins-core.php:66
 #: includes/class-alg-download-plugins-core.php:83
 msgid "Download ZIP"
@@ -48,8 +40,16 @@ msgstr ""
 msgid "%s can not open a new zip archive (error code %s)."
 msgstr ""
 
-#: includes/class-alg-download-plugins-core.php:672
+#: includes/class-alg-download-plugins-core.php:675
 msgid "Unexpected error"
+msgstr ""
+
+#: includes/class-alg-download-plugins.php:101
+msgid "Settings"
+msgstr ""
+
+#: includes/class-alg-download-plugins.php:104
+msgid "Go Pro"
 msgstr ""
 
 #: includes/pro/class-alg-download-plugins-pro.php:60
