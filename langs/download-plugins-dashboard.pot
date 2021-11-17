@@ -1,3 +1,42 @@
+# Copyright (C) 2021 WPFactory
+# This file is distributed under the same license as the Download Plugins and Themes from Dashboard plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Download Plugins and Themes from Dashboard 1.8.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/download-plugins-dashboard\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-11-17T18:07:01+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: download-plugins-dashboard\n"
+
+#. Plugin Name of the plugin
+#: includes/class-alg-download-plugins-core.php:516
+#: includes/settings/class-alg-download-plugins-settings.php:61
+#: includes/settings/class-alg-download-plugins-settings.php:77
+msgid "Download Plugins and Themes from Dashboard"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP."
+msgstr ""
+
+#. Author of the plugin
+msgid "WPFactory"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wpfactory.com"
+msgstr ""
+
 #: includes/class-alg-download-plugins-core.php:66
 #: includes/class-alg-download-plugins-core.php:83
 msgid "Download ZIP"
@@ -16,18 +55,10 @@ msgid "Once a Minute"
 msgstr ""
 
 #: includes/class-alg-download-plugins-core.php:515
-#, php-format
 msgid "To use %s plugin, %s must be available on your server."
 msgstr ""
 
-#: includes/class-alg-download-plugins-core.php:516
-#: includes/settings/class-alg-download-plugins-settings.php:61
-#: includes/settings/class-alg-download-plugins-settings.php:77
-msgid "Download Plugins and Themes from Dashboard"
-msgstr ""
-
 #: includes/class-alg-download-plugins-core.php:536
-#, php-format
 msgid "Error: %s"
 msgstr ""
 
@@ -36,7 +67,6 @@ msgid "Something went wrong..."
 msgstr ""
 
 #: includes/class-alg-download-plugins-core.php:616
-#, php-format
 msgid "%s can not open a new zip archive (error code %s)."
 msgstr ""
 
@@ -52,24 +82,11 @@ msgstr ""
 msgid "Go Pro"
 msgstr ""
 
-#: includes/pro/class-alg-download-plugins-pro.php:60
-#: includes/pro/class-alg-download-plugins-pro.php:65
-msgid "Run now"
-msgstr ""
-
-#: includes/pro/class-alg-download-plugins-pro.php:62
-#: includes/pro/class-alg-download-plugins-pro.php:67
-#, php-format
-msgid "Scheduled in %s"
-msgstr ""
-
 #: includes/settings/class-alg-download-plugins-settings.php:41
-#, php-format
 msgid "Plugins successfully downloaded to %s."
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:47
-#, php-format
 msgid "Themes successfully downloaded to %s."
 msgstr ""
 
@@ -158,12 +175,7 @@ msgid "Tools"
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:255
-#, php-format
-msgid ""
-"Please note that if you have large number of plugins or themes, you may need "
-"to <a href=\"%s\" target=\"_blank\">increase your WP memory limits</a> to "
-"use \"Download all\" tools. Your current memory limits are: %s (standard) "
-"and %s (admin)."
+msgid "Please note that if you have large number of plugins or themes, you may need to <a href=\"%s\" target=\"_blank\">increase your WP memory limits</a> to use \"Download all\" tools. Your current memory limits are: %s (standard) and %s (admin)."
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:259
@@ -176,8 +188,7 @@ msgid "Download all"
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:265
-msgid ""
-"Please note that this won't include \"Must-Use\" and \"Drop-in\" plugins."
+msgid "Please note that this won't include \"Must-Use\" and \"Drop-in\" plugins."
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:266
@@ -210,7 +221,6 @@ msgid "Temporary directory"
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:295
-#, php-format
 msgid "Leave blank to use the default system temporary directory: %s."
 msgstr ""
 
@@ -219,7 +229,6 @@ msgid "Periodical Downloads"
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:305
-#, php-format
 msgid "Periodical downloads are available in %s only."
 msgstr ""
 
@@ -233,14 +242,11 @@ msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:315
 #: includes/settings/class-alg-download-plugins-settings.php:370
-#, php-format
 msgid "Possible options: %s."
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:318
-msgid ""
-"Please note that this won't include \"Must-Use\", \"Drop-in\" and \"Single "
-"File\" plugins."
+msgid "Please note that this won't include \"Must-Use\", \"Drop-in\" and \"Single File\" plugins."
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:324
