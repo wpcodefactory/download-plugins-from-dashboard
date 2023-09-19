@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Main Plugin Class
  *
- * @version 1.8.0
+ * @version 1.8.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -27,6 +27,24 @@ final class Alg_Download_Plugins {
 	 * @since 1.0.0
 	 */
 	protected static $_instance = null;
+
+	/**
+	 * Settings.
+	 *
+	 * @since 1.8.4
+	 *
+	 * @var Alg_Download_Plugins_Settings
+	 */
+	public $settings;
+
+	/**
+	 * Core.
+	 *
+	 * @since 1.8.4
+	 *
+	 * @var Alg_Download_Plugins_Core
+	 */
+	public $core;
 
 	/**
 	 * Main Alg_Download_Plugins Instance.

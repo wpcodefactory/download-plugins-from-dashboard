@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.8.0
+ * @version 1.8.4
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -13,6 +13,15 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_Download_Plugins_Settings' ) ) :
 
 class Alg_Download_Plugins_Settings {
+
+	/**
+	 * Id.
+	 *
+	 * @since 1.8.4
+	 *
+	 * @var string
+	 */
+	public $id;
 
 	/**
 	 * Constructor.
