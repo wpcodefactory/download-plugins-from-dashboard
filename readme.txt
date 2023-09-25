@@ -1,9 +1,9 @@
 === Download Plugins and Themes from Dashboard ===
-Contributors: wpcodefactory, omardabbas, kousikmukherjeeli, Karzin
+Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: download, plugin, theme, zip, dashboard
 Requires at least: 3.1
 Tested up to: 6.3
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,6 +45,9 @@ Advanced settings include selecting different ZIP libraries (ZipArchive or PclZi
 3. Settings.
 
 == Changelog ==
+
+= 1.8.5 - 25/09/2023 =
+* Update plugin icon, banner.
 
 = 1.8.4 - 19/09/2023 =
 * Fix - PHP Warnings are triggering on PHP version 8.2.
