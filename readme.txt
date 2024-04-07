@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: download, plugin, theme, zip, dashboard
 Requires at least: 3.1
-Tested up to: 6.3
-Stable tag: 1.8.5
+Tested up to: 6.5
+Stable tag: 1.8.6
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,6 +45,11 @@ Advanced settings include selecting different ZIP libraries (ZipArchive or PclZi
 3. Settings.
 
 == Changelog ==
+
+= 1.8.6 - 07/04/2024 =
+* Fix PHP warnings.
+* Fix vulnerability.
+* Tested up to: 6.5.
 
 = 1.8.5 - 25/09/2023 =
 * Update plugin icon, banner.
