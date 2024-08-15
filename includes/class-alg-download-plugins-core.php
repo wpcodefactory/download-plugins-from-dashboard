@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.8.6
+ * @version 1.8.8
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -64,7 +64,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * add_theme_download_links.
 	 *
-	 * @version 1.7.1
+	 * @version 1.8.8
 	 * @since   1.1.0
 	 *
 	 * @todo    [later] (dev) add download links to each theme's "Theme Details"
@@ -76,15 +76,21 @@ class Alg_Download_Plugins_Core {
 			alg_download_plugins()->version,
 			true
 		);
-		wp_localize_script( 'alg-theme-download-links', 'alg_object', array(
+		wp_localize_script( 'alg-theme-download-links', 'alg_localize_object', array(
 			'download_link_text' => __( 'Download ZIP', 'download-plugins-dashboard' ),
 		) );
+		wp_add_inline_script( 'alg-theme-download-links', 'let alg_object = ' . json_encode( array(
+				'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
+				'themes_url' => admin_url( 'themes.php' ),
+				'nonce'      => array( 'param' => 'alg_nonce', 'value' => wp_create_nonce( 'alg_download_item' ) )
+			) ), 'before'
+		);
 	}
 
 	/**
 	 * Show action links on the plugin screen.
 	 *
-	 * @version 1.5.0
+	 * @version 1.8.8
 	 * @since   1.0.0
 	 */
 	function add_plugin_download_action_links( $actions, $plugin_file, $plugin_data, $context ) {
@@ -92,8 +98,12 @@ class Alg_Download_Plugins_Core {
 		if ( isset( $plugin_file[0] ) ) {
 			$extra_params = ( isset( $_GET['plugin_status'] ) && in_array( $_GET['plugin_status'], array( 'mustuse', 'dropins' ) ) ?
 				'&alg_download_plugin_status=' . $_GET['plugin_status'] : '' );
+			$link = add_query_arg( array(
+				'alg_download_plugin' => $plugin_file[0] . $extra_params,
+				'alg_nonce'           => wp_create_nonce( 'alg_download_item' )
+			), admin_url( 'plugins.php' ) );
 			$actions = array_merge( $actions, array(
-				'<a href="' . admin_url( 'plugins.php?alg_download_plugin=' . $plugin_file[0] . $extra_params ) . '">' .
+				'<a href="' . $link . '">' .
 					__( 'Download ZIP', 'download-plugins-dashboard' ) . '</a>' )
 			);
 		}
@@ -412,13 +422,18 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_theme.
 	 *
-	 * @version 1.8.6
+	 * @version 1.8.8
 	 * @since   1.1.0
 	 *
 	 * @todo    [later] (dev) extra validation (i.e. check for `$theme_name` in `wp_get_themes()`)
 	 */
 	function download_theme() {
-		if ( isset( $_GET['alg_download_theme'] ) && is_user_logged_in() && current_user_can( 'switch_themes' ) ) {
+		if (
+			isset( $_GET['alg_download_theme'] ) &&
+			is_user_logged_in() &&
+			current_user_can( 'switch_themes' ) &&
+			isset( $_GET['alg_nonce'] ) && wp_verify_nonce( $_GET['alg_nonce'], 'alg_download_item' )
+		) {
 			if (
 				'' != ( $theme_name = basename( sanitize_text_field( $_GET['alg_download_theme'] ) ) ) &&
 				is_a( ( $_theme = wp_get_theme( $theme_name ) ), 'WP_Theme' ) &&
@@ -485,11 +500,16 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_plugin.
 	 *
-	 * @version 1.8.6
+	 * @version 1.8.8
 	 * @since   1.0.0
 	 */
 	function download_plugin() {
-		if ( isset( $_GET['alg_download_plugin'] ) && is_user_logged_in() && current_user_can( 'activate_plugins' ) ) {
+		if (
+			isset( $_GET['alg_download_plugin'] ) &&
+			is_user_logged_in() &&
+			current_user_can( 'activate_plugins' ) &&
+			isset( $_GET['alg_nonce'] ) && wp_verify_nonce( $_GET['alg_nonce'], 'alg_download_item' )
+		) {
 			if ( '' != ( $plugin_name = basename( sanitize_text_field( $_GET['alg_download_plugin'] ) ) ) ) {
 				$all_plugins = $this->get_plugins();
 				foreach ( $all_plugins as $plugin_file => $plugin_data ) {

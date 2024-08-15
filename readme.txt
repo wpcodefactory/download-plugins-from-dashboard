@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
-Tested up to: 6.5
-Stable tag: 1.8.7
+Tested up to: 6.6
+Stable tag: 1.8.8
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -145,8 +145,12 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 
 == Changelog ==
 
+= 1.8.8 - 15/08/2024 =
+* Fixed vulnerability.
+* Tested up to: 6.6.
+
 = 1.8.7 - 16/05/2024 =
-* readme.txt content update
+* readme.txt content update.
 
 = 1.8.6 - 07/04/2024 =
 * Fix PHP warnings.
