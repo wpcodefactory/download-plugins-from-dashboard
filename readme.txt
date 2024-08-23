@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
 Tested up to: 6.6
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -144,6 +144,10 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Settings.
 
 == Changelog ==
+
+= 1.8.9 - 23/08/2024 =
+* Dev - Added new option to manage the version separator character when appending the plugin/theme version to zip filename.
+* Dev - Improved Settings UI by applying the default WordPress settings style.
 
 = 1.8.8 - 15/08/2024 =
 * Fixed vulnerability.

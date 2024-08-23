@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.8.4
+ * @version 1.8.9
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -78,7 +78,7 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * output_plugin_menu.
 	 *
-	 * @version 1.6.0
+	 * @version 1.8.9
 	 * @since   1.2.0
 	 */
 	function output_plugin_menu() {
@@ -89,9 +89,8 @@ class Alg_Download_Plugins_Settings {
 				'<p>' .
 					'<input class="button-primary" type="submit" name="' . $this->id . '_save_settings" value="' .
 						__( 'Save settings', 'download-plugins-dashboard' ) . '">' . ' ' .
-					'<input class="button-primary" type="submit" name="' . $this->id . '_reset_settings" value="' .
+					'<input class="button-secondary" type="submit" name="' . $this->id . '_reset_settings" value="' .
 						__( 'Reset settings', 'download-plugins-dashboard' ) . '"' .
-						' style="color:yellow;"' .
 						' onclick="return confirm(\'' . __( 'Are you sure?', 'download-plugins-dashboard' ) . '\')">' .
 					wp_nonce_field( $this->id . '_save_settings_nonce', $this->id . '_save_settings_nonce', true, false ) .
 				'</p>' .
@@ -159,26 +158,55 @@ class Alg_Download_Plugins_Settings {
 	}
 
 	/**
+	 * generate_custom_attributes_string.
+	 *
+	 * @see WC_Admin_Settings::output_fields()
+	 *
+	 * @version 1.8.9
+	 * @since   1.8.9
+	 *
+	 * @param $field
+	 *
+	 * @return string
+	 */
+	function generate_custom_attributes_string( $field ) {
+		$custom_atts = '';
+		if ( ! empty( $field['custom_attributes'] ) && is_array( $field['custom_attributes'] ) ) {
+			$custom_atts = array();
+			foreach ( $field['custom_attributes'] as $attribute => $attribute_value ) {
+				$custom_atts[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+			$custom_atts = implode( ' ', $custom_atts );
+		} elseif ( ! empty( $field['custom_attributes'] ) && is_string( $field['custom_attributes'] ) ) {
+			$custom_atts = $field['custom_attributes'];
+		}
+
+		return $custom_atts;
+	}
+
+	/**
 	 * get_fields_html.
 	 *
-	 * @version 1.6.0
+	 * @version 1.8.9
 	 * @since   1.2.0
 	 */
 	function get_fields_html() {
 		$table_data = array();
 		foreach ( $this->get_settings() as $field ) {
 			$field_id    = $this->id . '_' . $field['id'];
-			$field_title = '<label for="' . $field_id . '">' . $field['title'] . '</label>';
 			$field_html  = '';
+			$use_one_col = false;
+			$default_text_style = empty( $field['custom_attributes']['style'] ) ? 'style="width:100%"' : '';
 			if ( 'title' != $field['type'] ) {
+				$field_title = '<label for="' . $field_id . '">' . $field['title'] . '</label>';
 				$field_value = ( false != get_option( $field_id, false ) ? esc_html( get_option( $field_id, false ) ) : $field['default'] );
-				$custom_atts = ( ! empty( $field['custom_attributes'] ) ? ' ' . $field['custom_attributes'] : '' );
+				$custom_atts = $this->generate_custom_attributes_string( $field );
 				switch ( $field['type'] ) {
 					case 'select_yes_no':
 						$field_html = '<select name="' . $field_id . '" id="' . $field_id . '"' . $custom_atts . '>' .
-							'<option value="yes" ' . selected( $field_value, 'yes', false ) . '>' . __( 'Yes', 'download-plugins-dashboard' ) . '</option>' .
-							'<option value="no" '  . selected( $field_value, 'no',  false ) . '>' . __( 'No',  'download-plugins-dashboard' ) . '</option>' .
-						'</select>';
+						              '<option value="yes" ' . selected( $field_value, 'yes', false ) . '>' . __( 'Yes', 'download-plugins-dashboard' ) . '</option>' .
+						              '<option value="no" ' . selected( $field_value, 'no', false ) . '>' . __( 'No', 'download-plugins-dashboard' ) . '</option>' .
+						              '</select>';
 						break;
 					case 'select':
 						$options = '';
@@ -188,32 +216,40 @@ class Alg_Download_Plugins_Settings {
 						$field_html = '<select name="' . $field_id . '" id="' . $field_id . '"' . $custom_atts . '>' . $options . '</select>';
 						break;
 					case 'textarea':
-						$field_html = '<textarea name="' . $field_id . '" id="' . $field_id . '" style="width:100%;"' . $custom_atts . '>' . $field_value . '</textarea>';
+						$field_html = '<textarea name="' . $field_id . '" id="' . $field_id . '"' .$default_text_style. $custom_atts . '>' . $field_value . '</textarea>';
 						break;
 					case 'tool':
 						$field_html = '';
 						break;
 					default:
-						$field_html = '<input type="' . $field['type'] . '" name="' . $field_id . '" id="' . $field_id . '" value="' . $field_value . '" style="width:100%;"' .
-							$custom_atts . '>';
+						$field_html = '<input type="' . $field['type'] . '" name="' . $field_id . '" id="' . $field_id . '" value="' . $field_value . '" ' .$default_text_style.
+						              $custom_atts . '>';
 						break;
 				}
+			} else {
+				$use_one_col = true;
+				$field_title = '<h2 style="margin:0" for="' . $field_id . '">' . $field['title'] . '</h2>';
 			}
 			if ( isset( $field['desc'] ) ) {
 				$field_html .= ' ' . $field['desc'];
 			}
-			$table_data[] = array( $field_title, $field_html );
+
+
+			$table_data[] = array( 'title' => $field_title, 'value' => $field_html, 'one_col' => $use_one_col );
+			//$table_data[] = array( $field_title, $field_html );
 		}
+
 		return $this->get_table_html(
 			$table_data,
-			array( 'table_heading_type' => 'vertical', 'table_class' => 'widefat striped' , 'columns_styles' => array( 'width:25%;', 'width:75%;' ) )
+			//array( 'table_heading_type' => 'vertical', 'table_class' => 'widefat striped' , 'columns_styles' => array( 'width:25%;', 'width:75%;' ) )
+			array( 'table_heading_type' => 'vertical', 'table_class' => 'form-table' )
 		);
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.7.0
+	 * @version 1.8.9
 	 * @since   1.2.0
 	 */
 	function get_settings() {
@@ -228,8 +264,8 @@ class Alg_Download_Plugins_Settings {
 		);
 		return array(
 			array(
-				'title'   => '<strong>' . __( 'General Settings', 'download-plugins-dashboard' ) . '</strong>',
-				'id'      => 'general_settings_title',
+				'title'   => __( 'Directory', 'download-plugins-dashboard' ),
+				'id'      => 'general_settings_directory_title',
 				'type'    => 'title',
 			),
 			array(
@@ -245,6 +281,11 @@ class Alg_Download_Plugins_Settings {
 				'default' => 'yes',
 			),
 			array(
+				'title'   => __( 'Version', 'download-plugins-dashboard' ),
+				'id'      => 'general_settings_version_title',
+				'type'    => 'title',
+			),
+			array(
 				'title'   => __( 'Append plugin version number to ZIP filename', 'download-plugins-dashboard' ),
 				'id'      => 'plugins_append_version',
 				'type'    => 'select_yes_no',
@@ -257,12 +298,19 @@ class Alg_Download_Plugins_Settings {
 				'default' => 'no',
 			),
 			array(
-				'title'   => '<strong>' . __( 'Tools', 'download-plugins-dashboard' ) . '</strong>',
+				'title'             => __( 'Version separator character', 'download-plugins-dashboard' ),
+				'id'                => 'version_separator_char',
+				'type'              => 'text',
+				'custom_attributes' => array( 'maxlength' => 1, 'style' => 'width:54px' ),
+				'default'           => '.',
+			),
+			array(
+				'title'   => __( 'Tools', 'download-plugins-dashboard' ),
 				'id'      => 'tools_title',
 				'type'    => 'title',
-				'desc'    => '<em>' . sprintf(
+				'desc'    => '<p style="font-weight:400">' . sprintf(
 					__( 'Please note that if you have large number of plugins or themes, you may need to <a href="%s" target="_blank">increase your WP memory limits</a> to use "Download all" tools. Your current memory limits are: %s (standard) and %s (admin).', 'download-plugins-dashboard' ),
-						'https://wordpress.org/support/article/editing-wp-config-php/#increasing-memory-allocated-to-php', WP_MEMORY_LIMIT, WP_MAX_MEMORY_LIMIT ) . '</em>',
+						'https://wordpress.org/support/article/editing-wp-config-php/#increasing-memory-allocated-to-php', WP_MEMORY_LIMIT, WP_MAX_MEMORY_LIMIT ) . '</p>',
 			),
 			array(
 				'title'   => __( 'Plugins', 'download-plugins-dashboard' ),
@@ -270,10 +318,10 @@ class Alg_Download_Plugins_Settings {
 				'type'    => 'tool',
 				'default' => '',
 				'desc'    => '<a href="' . add_query_arg( 'alg_download_plugin_all', true ) . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>' . ' ' .
-					'<em>' .
+					'<br /><p class="description">' .
 						__( 'Please note that this won\'t include "Must-Use" and "Drop-in" plugins.', 'download-plugins-dashboard' ) . ' ' .
 						__( 'However, you can download them from "Plugins" page directly.', 'download-plugins-dashboard' ) .
-					'</em>',
+					'</p>',
 			),
 			array(
 				'title'   => __( 'Themes', 'download-plugins-dashboard' ),
@@ -283,14 +331,14 @@ class Alg_Download_Plugins_Settings {
 				'desc'    => '<a href="' . add_query_arg( 'alg_download_theme_all', true )  . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>',
 			),
 			array(
-				'title'   => '<strong>' . __( 'Advanced Settings', 'download-plugins-dashboard' ) . '</strong>',
+				'title'   => __( 'Advanced Settings', 'download-plugins-dashboard' ),
 				'id'      => 'advanced_settings_title',
 				'type'    => 'title',
 			),
 			array(
 				'title'   => __( 'ZIP library', 'download-plugins-dashboard' ),
-				'desc'    => '<em>' . __( 'Sets which ZIP library should be used.', 'download-plugins-dashboard' ) . ' ' .
-					__( 'Leave the default value if not sure.', 'download-plugins-dashboard' ) . '</em>',
+				'desc'    => '<p class="description">' . __( 'Sets which ZIP library should be used.', 'download-plugins-dashboard' ) . ' ' .
+					__( 'Leave the default value if not sure.', 'download-plugins-dashboard' ) . '</p>',
 				'id'      => 'zip_library',
 				'type'    => 'select',
 				'default' => ( class_exists( 'ZipArchive' ) ? 'ziparchive' : 'pclzip' ),
@@ -301,8 +349,8 @@ class Alg_Download_Plugins_Settings {
 			),
 			array(
 				'title'   => __( 'Temporary directory', 'download-plugins-dashboard' ),
-				'desc'    => '<em>' . sprintf( __( 'Leave blank to use the default system temporary directory: %s.', 'download-plugins-dashboard' ),
-					'<code>' . alg_download_plugins()->core->get_sys_temp_dir() . '</code>' ) . '</em>',
+				'desc'    => '<p class="description">' . sprintf( __( 'Leave blank to use the default system temporary directory: %s.', 'download-plugins-dashboard' ),
+					'<code>' . alg_download_plugins()->core->get_sys_temp_dir() . '</code>' ) . '</p>',
 				'id'      => 'temp_dir',
 				'type'    => 'text',
 				'default' => '',
@@ -323,10 +371,10 @@ class Alg_Download_Plugins_Settings {
 				'options' => $period_options,
 				'desc'    => apply_filters( 'alg_download_plugins_settings', '<em>' . sprintf( __( 'Possible options: %s.', 'download-plugins-dashboard' ),
 					implode( '; ', $period_options ) ) . '</em>', 'plugins_bulk_period' ) . ' ' .
-					'<em>' .
+					'<p class="description">' .
 						__( 'Please note that this won\'t include "Must-Use", "Drop-in" and "Single File" plugins.', 'download-plugins-dashboard' ) . ' ' .
 						__( 'However, you can download them from "Plugins" page directly.', 'download-plugins-dashboard' ) .
-					'</em>',
+					'</p>',
 				'custom_attributes' => apply_filters( 'alg_download_plugins_settings', 'disabled' ),
 			),
 			array(
@@ -416,11 +464,11 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * get_table_html.
 	 *
-	 * @version 1.8.0
+	 * @version 1.8.9
 	 * @since   1.2.0
 	 */
 	function get_table_html( $data, $args = array() ) {
-		$defaults = array(
+		$defaults    = array(
 			'table_class'        => '',
 			'table_style'        => '',
 			'row_styles'         => '',
@@ -428,28 +476,67 @@ class Alg_Download_Plugins_Settings {
 			'columns_classes'    => array(),
 			'columns_styles'     => array(),
 		);
-		$args         = array_merge( $defaults, $args );
-		$table_class  = ( '' == $args['table_class'] ? '' : ' class="' . $args['table_class'] . '"' );
-		$table_style  = ( '' == $args['table_style'] ? '' : ' style="' . $args['table_style'] . '"' );
-		$row_styles   = ( '' == $args['row_styles']  ? '' : ' style="' . $args['row_styles']  . '"' );
-		$html         = '';
+		$args        = array_merge( $defaults, $args );
+		$table_class = ( '' == $args['table_class'] ? '' : ' class="' . $args['table_class'] . '"' );
+		$table_style = ( '' == $args['table_style'] ? '' : ' style="' . $args['table_style'] . '"' );
+		$row_styles  = ( '' == $args['row_styles'] ? '' : ' style="' . $args['row_styles'] . '"' );
+		$html        = '';
 		$html        .= '<table' . $table_class . $table_style . '>';
 		$html        .= '<tbody>';
-		foreach( $data as $row_number => $row ) {
-			$html .= '<tr' . $row_styles . '>';
-			foreach( $row as $column_number => $value ) {
-				$th_or_td      = ( ( 0 === $row_number && 'horizontal' === $args['table_heading_type'] ) || ( 0 === $column_number && 'vertical' === $args['table_heading_type'] ) ? 'th' : 'td' );
-				$column_class  = ( ! empty( $args['columns_classes'][ $column_number ] ) ? ' class="' . $args['columns_classes'][ $column_number ] . '"' : '' );
-				$column_style  = ( ! empty( $args['columns_styles'][ $column_number ] )  ? ' style="' . $args['columns_styles'][ $column_number ]  . '"' : '' );
-				$html         .= '<' . $th_or_td . $column_class . $column_style . '>';
-				$html         .= $value;
-				$html         .= '</' . $th_or_td . '>';
+		foreach ( $data as $row_number => $row ) {
+			$html               .= '<tr' . $row_styles . '>';
+			$column_class_title = $this->get_column_class( $args['columns_classes'], 'title' );
+			$column_class_value = $this->get_column_class( $args['columns_classes'], 'value' );
+			$column_style_title = $this->get_column_class( $args['columns_styles'], 'title' );
+			$column_style_value = $this->get_column_class( $args['columns_styles'], 'value' );
+			if ( $row['one_col'] ) {
+				$html .= '<th ' . $column_class_title . $column_style_title . ' colspan="2">' . $row['title'] . $row['value'] . '</th>';
+			} else {
+				$html .= '<th ' . $column_class_title . $column_style_title . '>' . $row['title'] . '</th>';
+				$html .= '<td ' . $column_class_value . $column_style_value . '>' . $row['value'] . '</td>';
 			}
 			$html .= '</tr>';
 		}
 		$html .= '</tbody>';
 		$html .= '</table>';
+
 		return $html;
+	}
+
+	/**
+	 * get_column_class.
+	 *
+	 * @version 1.8.9
+	 * @since   1.8.9
+	 *
+	 * @param $column_classes
+	 * @param $type
+	 *
+	 * @return string
+	 */
+	function get_column_class( $column_classes, $type ) {
+		$column_number         = 'title' === $type ? $column_number = 0 : 1;
+		$column_class = ( ! empty( $column_classes[ $column_number ] ) ? ' class="' . $column_classes[ $column_number ] . '"' : '' );
+
+		return $column_class;
+	}
+
+	/**
+	 * get_column_style.
+	 *
+	 * @version 1.8.9
+	 * @since   1.8.9
+	 *
+	 * @param $column_styles
+	 * @param $type
+	 *
+	 * @return string
+	 */
+	function get_column_style( $column_styles, $type ) {
+		$column_number         = 'title' === $type ? $column_number = 0 : 1;
+		$column_style = ( ! empty( $column_styles[ $column_number ] ) ? ' style="' . $column_styles[ $column_number ] . '"' : '' );
+
+		return $column_style;
 	}
 
 }

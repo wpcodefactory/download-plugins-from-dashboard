@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.8.8
+ * @version 1.8.9
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -31,7 +31,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.4.0
+	 * @version 1.8.9
 	 * @since   1.2.0
 	 *
 	 * @todo    [later] (dev) add nonces
@@ -40,18 +40,18 @@ class Alg_Download_Plugins_Core {
 	 * @todo    [later] (feature) add "Download active theme only" (periodically)
 	 */
 	function __construct() {
-		// Links
+		// Links.
 		add_filter( 'plugin_action_links',                       array( $this, 'add_plugin_download_action_links' ), PHP_INT_MAX, 4 );
 		add_action( 'admin_enqueue_scripts',                     array( $this, 'add_theme_download_links' ) );
-		// Core
+		// Core.
 		add_action( 'admin_init',                                array( $this, 'download_plugin' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme' ) );
 		add_action( 'admin_init',                                array( $this, 'download_plugin_bulk' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme_bulk' ) );
-		// Tools
+		// Tools.
 		add_action( 'admin_init',                                array( $this, 'download_plugin_all' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme_all' ) );
-		// Crons
+		// Crons.
 		add_filter( 'cron_schedules',                            array( $this, 'cron_add_custom_intervals' ) );
 		add_action( 'alg_download_plugins_cron',                 array( $this, 'cron_alg_download_plugins' ) );
 		add_action( 'alg_download_themes_cron',                  array( $this, 'cron_alg_download_themes' ) );
@@ -59,6 +59,22 @@ class Alg_Download_Plugins_Core {
 		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_plugins_event' ) );
 		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_schedule_themes_event' ) );
 		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_themes_event' ) );
+		// Plugin and theme version.
+		add_filter( 'alg_download_plugins_version_separator_char', array( $this, 'change_version_separator' ) );
+	}
+
+	/**
+	 * change_version_separator.
+	 *
+	 * @version 1.8.9
+	 * @since   1.8.9
+	 *
+	 * @param $char
+	 *
+	 * @return false|mixed|null
+	 */
+	function change_version_separator( $char ) {
+		return get_option( 'alg_download_plugins_dashboard_version_separator_char', '.' );
 	}
 
 	/**
@@ -80,7 +96,6 @@ class Alg_Download_Plugins_Core {
 			'download_link_text' => __( 'Download ZIP', 'download-plugins-dashboard' ),
 		) );
 		wp_add_inline_script( 'alg-theme-download-links', 'let alg_object = ' . json_encode( array(
-				'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
 				'themes_url' => admin_url( 'themes.php' ),
 				'nonce'      => array( 'param' => 'alg_nonce', 'value' => wp_create_nonce( 'alg_download_item' ) )
 			) ), 'before'
@@ -579,7 +594,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_plugin_or_theme.
 	 *
-	 * @version 1.8.6
+	 * @version 1.8.9
 	 * @since   1.1.0
 	 *
 	 * @todo    [later] (dev) recheck if themes can be single file (i.e. `$is_dir = false`)
@@ -589,7 +604,9 @@ class Alg_Download_Plugins_Core {
 			return false;
 		}
 		$plugin_or_theme_name = basename( $plugin_or_theme_name );
-		$zip_file_name        = $plugin_or_theme_name . ( '' != $version ? '.' : '' ) . $version . '.zip';
+		$version_separator    = sanitize_text_field( apply_filters( 'alg_download_plugins_version_separator_char', '.' ) );
+		$version_separator    = strlen( $version_separator ) > 0 ? $version_separator[0] : $version_separator;
+		$zip_file_name        = $plugin_or_theme_name . ( '' != $version ? $version_separator : '' ) . $version . '.zip';
 		$zip_file_path        = $this->get_temp_dir() . '/' . $zip_file_name;
 		$plugin_or_theme_path = $plugin_or_theme_dir . '/' . $plugin_or_theme_name;
 		$exclude_path         = ( ! $is_dir || $add_main_dir ? $plugin_or_theme_dir : $plugin_or_theme_path );
