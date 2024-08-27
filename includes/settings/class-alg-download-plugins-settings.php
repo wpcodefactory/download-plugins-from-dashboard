@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.8.9
+ * @version 1.9.0
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -85,8 +85,8 @@ class Alg_Download_Plugins_Settings {
 		echo '<div class="wrap">' .
 			'<h2>' . __( 'Download Plugins and Themes from Dashboard', 'download-plugins-dashboard' ) . '</h2>' .
 			'<form action="" method="post">' .
-				'<p>' .$this->get_fields_html() . '</p>' .
-				'<p>' .
+				$this->get_fields_html() .
+				'<p class="submit">' .
 					'<input class="button-primary" type="submit" name="' . $this->id . '_save_settings" value="' .
 						__( 'Save settings', 'download-plugins-dashboard' ) . '">' . ' ' .
 					'<input class="button-secondary" type="submit" name="' . $this->id . '_reset_settings" value="' .
@@ -228,7 +228,7 @@ class Alg_Download_Plugins_Settings {
 				}
 			} else {
 				$use_one_col = true;
-				$field_title = '<h2 style="margin:0" for="' . $field_id . '">' . $field['title'] . '</h2>';
+				$field_title = '<h2 style="" for="' . $field_id . '">' . $field['title'] . '</h2>';
 			}
 			if ( isset( $field['desc'] ) ) {
 				$field_html .= ' ' . $field['desc'];
@@ -247,9 +247,26 @@ class Alg_Download_Plugins_Settings {
 	}
 
 	/**
+	 * get_available_in_pro_version_html.
+	 *
+	 * @version 1.9.0
+	 * @since   1.9.0
+	 *
+	 * @return string
+	 */
+	function get_available_in_pro_version_html() {
+		return '<p><span style="margin-right:3px">&#x1F3C6;</span>'
+		       . sprintf( __( 'Unlock the unavailable options with the %s.', 'download-plugins-dashboard' ),
+				'<a target="_blank" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">'
+				.
+				__( 'Pro version', 'download-plugins-dashboard' ) . '</a>' )
+		       . '</p>';
+	}
+
+	/**
 	 * get_settings.
 	 *
-	 * @version 1.8.9
+	 * @version 1.9.0
 	 * @since   1.2.0
 	 */
 	function get_settings() {
@@ -269,13 +286,15 @@ class Alg_Download_Plugins_Settings {
 				'type'    => 'title',
 			),
 			array(
-				'title'   => __( 'Add main plugin directory to ZIP', 'download-plugins-dashboard' ),
+				'title'   => __( 'Add plugin directory', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Adds main plugin directory to ZIP.', 'download-plugins-dashboard' ) ),
 				'id'      => 'plugins_add_main_dir',
 				'type'    => 'select_yes_no',
 				'default' => 'yes',
 			),
 			array(
-				'title'   => __( 'Add main theme directory to ZIP', 'download-plugins-dashboard' ),
+				'title'   => __( 'Add theme directory', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Adds main theme directory to ZIP.', 'download-plugins-dashboard' ) ),
 				'id'      => 'themes_add_main_dir',
 				'type'    => 'select_yes_no',
 				'default' => 'yes',
@@ -286,13 +305,15 @@ class Alg_Download_Plugins_Settings {
 				'type'    => 'title',
 			),
 			array(
-				'title'   => __( 'Append plugin version number to ZIP filename', 'download-plugins-dashboard' ),
+				'title'   => __( 'Append plugin version', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Appends plugin version number to ZIP filename.', 'download-plugins-dashboard' ) ),
 				'id'      => 'plugins_append_version',
 				'type'    => 'select_yes_no',
 				'default' => 'no',
 			),
 			array(
-				'title'   => __( 'Append theme version number to ZIP filename', 'download-plugins-dashboard' ),
+				'title'   => __( 'Append theme version', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Appends theme version number to ZIP filename.', 'download-plugins-dashboard' ) ),
 				'id'      => 'themes_append_version',
 				'type'    => 'select_yes_no',
 				'default' => 'no',
@@ -356,12 +377,44 @@ class Alg_Download_Plugins_Settings {
 				'default' => '',
 			),
 			array(
-				'title'   => '<strong>' . __( 'Periodical Downloads', 'download-plugins-dashboard' ) . '</strong>',
+				'title'   => __( 'Download plugin link', 'download-plugins-dashboard' ),
+				'id'      => 'download_plugin_btn_title',
+				'type'    => 'title',
+				'desc'    => apply_filters( 'alg_download_plugins_settings', $this->get_available_in_pro_version_html() ),
+			),
+			array(
+				'title'             => __( 'Use custom color', 'download-plugins-dashboard' ),
+				'id'                => 'download_plugin_btn_use_custom_color',
+				'type'              => 'select_yes_no',
+				'default'           => 'no',
+				'custom_attributes' => array( apply_filters( 'alg_download_plugins_settings', 'disabled' ) => apply_filters( 'alg_download_plugins_settings', 'disabled' ) ),
+			),
+			array(
+				'title'             => __( 'Custom color', 'download-plugins-dashboard' ),
+				'id'                => 'download_plugin_btn_color',
+				'type'              => 'color',
+				'default'           => '#2271b1',
+				'custom_attributes' => array( apply_filters( 'alg_download_plugins_settings', 'disabled' ) => apply_filters( 'alg_download_plugins_settings', 'disabled' ), 'style' => 'width:27px;height:27px' ),
+			),
+			array(
+				'title'             => __( 'Font weight', 'download-plugins-dashboard' ),
+				'id'                => 'download_plugin_btn_font_weight',
+				'type'              => 'text',
+				'default'           => '400',
+				'custom_attributes' => array( apply_filters( 'alg_download_plugins_settings', 'disabled' ) => apply_filters( 'alg_download_plugins_settings', 'disabled' ), 'style' => 'width:189px;' ),
+			),
+			array(
+				'title'             => __( 'Text', 'download-plugins-dashboard' ),
+				'id'                => 'download_plugin_btn_text',
+				'type'              => 'text',
+				'default'           => __( 'Download ZIP', 'download-plugins-dashboard' ),
+				'custom_attributes' => array( apply_filters( 'alg_download_plugins_settings', 'disabled' ) => apply_filters( 'alg_download_plugins_settings', 'disabled' ), 'style' => 'width:189px;' ),
+			),
+			array(
+				'title'   => __( 'Periodical Downloads', 'download-plugins-dashboard' ),
 				'id'      => 'periodical_downloads_title',
 				'type'    => 'title',
-				'desc'    => apply_filters( 'alg_download_plugins_settings', '<em>' . sprintf( __( 'Periodical downloads are available in %s only.', 'download-plugins-dashboard' ),
-					'<a target="_blank" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">' .
-						__( 'Pro version', 'download-plugins-dashboard' ) . '</a>' ) . '</em>' ),
+				'desc'    => apply_filters( 'alg_download_plugins_settings', $this->get_available_in_pro_version_html() ),
 			),
 			array(
 				'title'   => __( 'Periodical plugins downloads', 'download-plugins-dashboard' ),
@@ -387,28 +440,32 @@ class Alg_Download_Plugins_Settings {
 				'custom_attributes' => apply_filters( 'alg_download_plugins_settings', 'disabled' ),
 			),
 			array(
-				'title'   => __( 'Path for periodical plugins downloads', 'download-plugins-dashboard' ),
+				'title'   => __( 'Plugins downloads path', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Path for periodical plugins downloads.', 'download-plugins-dashboard' ) ),
 				'id'      => 'plugins_bulk_dir',
 				'type'    => 'text',
 				'default' => alg_download_plugins()->core->get_uploads_dir( 'plugins-archive' ),
 				'custom_attributes' => apply_filters( 'alg_download_plugins_settings', 'disabled' ),
 			),
 			array(
-				'title'   => __( 'Path for periodical themes downloads', 'download-plugins-dashboard' ),
+				'title'   => __( 'Themes downloads path', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Path for periodical themes downloads.', 'download-plugins-dashboard' ) ),
 				'id'      => 'themes_bulk_dir',
 				'type'    => 'text',
 				'default' => alg_download_plugins()->core->get_uploads_dir( 'themes-archive' ),
 				'custom_attributes' => apply_filters( 'alg_download_plugins_settings', 'disabled' ),
 			),
 			array(
-				'title'   => __( 'Append download date & time to plugin ZIP filename', 'download-plugins-dashboard' ),
+				'title'   => __( 'Append plugin date & time', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Appends download date & time to plugin ZIP filename.', 'download-plugins-dashboard' ) ),
 				'id'      => 'plugins_append_date_time',
 				'type'    => 'select_yes_no',
 				'default' => 'no',
 				'custom_attributes' => apply_filters( 'alg_download_plugins_settings', 'disabled' ),
 			),
 			array(
-				'title'   => __( 'Append download date & time to theme ZIP filename', 'download-plugins-dashboard' ),
+				'title'   => __( 'Append theme date & time', 'download-plugins-dashboard' ),
+				'desc'    => sprintf( '<p class="description">%s</p>', __( 'Appends download date & time to theme ZIP filename.', 'download-plugins-dashboard' ) ),
 				'id'      => 'themes_append_date_time',
 				'type'    => 'select_yes_no',
 				'default' => 'no',
@@ -490,7 +547,7 @@ class Alg_Download_Plugins_Settings {
 			$column_style_title = $this->get_column_class( $args['columns_styles'], 'title' );
 			$column_style_value = $this->get_column_class( $args['columns_styles'], 'value' );
 			if ( $row['one_col'] ) {
-				$html .= '<th ' . $column_class_title . $column_style_title . ' colspan="2">' . $row['title'] . $row['value'] . '</th>';
+				$html .= '<th style="padding-top:0px;padding-bottom:10px" ' . $column_class_title . $column_style_title . ' colspan="2">' . $row['title'] . $row['value'] . '</th>';
 			} else {
 				$html .= '<th ' . $column_class_title . $column_style_title . '>' . $row['title'] . '</th>';
 				$html .= '<td ' . $column_class_value . $column_style_value . '>' . $row['value'] . '</td>';

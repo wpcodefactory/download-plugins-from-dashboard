@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
 Tested up to: 6.6
-Stable tag: 1.8.9
+Stable tag: 1.9.0
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -77,6 +77,10 @@ With the scheduled download for plugins/themes, you can include the date & time 
 
 Customize the naming convention and storage location for plugins & themes downloaded periodically, ensuring organized file management and easy access to archived versions.
 
+### 🏆 Customize the Download plugin link ###
+
+Customize the download plugin link on the plugins page with options such as: color, font-weight, and custom text.
+
 ___
 ## 💯 Why WPFactory?##
 
@@ -144,6 +148,11 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Settings.
 
 == Changelog ==
+
+= 1.9.0 - 26/08/2024 =
+* Dev - Added option to customize the download plugin link text color.
+* Dev - Added option to customize the download plugin link font weight.
+* Dev - Added option to customize the download plugin link text.
 
 = 1.8.9 - 23/08/2024 =
 * Dev - Added new option to manage the version separator character when appending the plugin/theme version to zip filename.

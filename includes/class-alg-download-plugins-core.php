@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.8.9
+ * @version 1.9.0
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -31,7 +31,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.8.9
+	 * @version 1.9.0
 	 * @since   1.2.0
 	 *
 	 * @todo    [later] (dev) add nonces
@@ -43,14 +43,17 @@ class Alg_Download_Plugins_Core {
 		// Links.
 		add_filter( 'plugin_action_links',                       array( $this, 'add_plugin_download_action_links' ), PHP_INT_MAX, 4 );
 		add_action( 'admin_enqueue_scripts',                     array( $this, 'add_theme_download_links' ) );
+
 		// Core.
 		add_action( 'admin_init',                                array( $this, 'download_plugin' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme' ) );
 		add_action( 'admin_init',                                array( $this, 'download_plugin_bulk' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme_bulk' ) );
+
 		// Tools.
 		add_action( 'admin_init',                                array( $this, 'download_plugin_all' ) );
 		add_action( 'admin_init',                                array( $this, 'download_theme_all' ) );
+
 		// Crons.
 		add_filter( 'cron_schedules',                            array( $this, 'cron_add_custom_intervals' ) );
 		add_action( 'alg_download_plugins_cron',                 array( $this, 'cron_alg_download_plugins' ) );
@@ -59,6 +62,7 @@ class Alg_Download_Plugins_Core {
 		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_plugins_event' ) );
 		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_schedule_themes_event' ) );
 		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_themes_event' ) );
+
 		// Plugin and theme version.
 		add_filter( 'alg_download_plugins_version_separator_char', array( $this, 'change_version_separator' ) );
 	}
@@ -110,6 +114,7 @@ class Alg_Download_Plugins_Core {
 	 */
 	function add_plugin_download_action_links( $actions, $plugin_file, $plugin_data, $context ) {
 		$plugin_file = explode( '/', $plugin_file );
+		$download_btn_text = apply_filters( 'alg_download_plugins_download_plugin_btn_text', __( 'Download ZIP', 'download-plugins-dashboard' ) );
 		if ( isset( $plugin_file[0] ) ) {
 			$extra_params = ( isset( $_GET['plugin_status'] ) && in_array( $_GET['plugin_status'], array( 'mustuse', 'dropins' ) ) ?
 				'&alg_download_plugin_status=' . $_GET['plugin_status'] : '' );
@@ -118,8 +123,8 @@ class Alg_Download_Plugins_Core {
 				'alg_nonce'           => wp_create_nonce( 'alg_download_item' )
 			), admin_url( 'plugins.php' ) );
 			$actions = array_merge( $actions, array(
-				'<a href="' . $link . '">' .
-					__( 'Download ZIP', 'download-plugins-dashboard' ) . '</a>' )
+				'<a class="alg_download_plugin" href="' . $link . '">' .
+				$download_btn_text . '</a>' )
 			);
 		}
 		return $actions;
