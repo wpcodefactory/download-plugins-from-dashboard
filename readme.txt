@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmu
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
 Tested up to: 6.6
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -148,6 +148,10 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Settings.
 
 == Changelog ==
+
+= 1.9.1 - 03/09/2024 =
+* Dev - Added auto-delete feature.
+* Dev - Added bulk download for selected plugins.
 
 = 1.9.0 - 26/08/2024 =
 * Dev - Added option to customize the download plugin link text color.

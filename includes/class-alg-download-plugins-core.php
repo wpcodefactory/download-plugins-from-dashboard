@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.9.0
+ * @version 1.9.1
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -31,7 +31,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 1.9.0
+	 * @version 1.9.1
 	 * @since   1.2.0
 	 *
 	 * @todo    [later] (dev) add nonces
@@ -65,6 +65,11 @@ class Alg_Download_Plugins_Core {
 
 		// Plugin and theme version.
 		add_filter( 'alg_download_plugins_version_separator_char', array( $this, 'change_version_separator' ) );
+
+		// Bulk Action
+		add_filter( 'bulk_actions-plugins', array( $this, 'bulk_action' ) );
+		add_filter( 'handle_bulk_actions-plugins', array( $this, 'bulk_action_download_plugin' ), 10, 1 );
+		add_action( 'admin_notices', array( $this, 'alg_download_plugin_bulk_action_notices' ) );
 	}
 
 	/**
@@ -715,7 +720,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * send_file.
 	 *
-	 * @version 1.8.0
+	 * @version 1.9.1
 	 * @since   1.3.0
 	 *
 	 * @see     https://stackoverflow.com/questions/11315951/using-the-browser-prompt-to-download-a-file
@@ -736,11 +741,84 @@ class Alg_Download_Plugins_Core {
 				flush();
 			}
 			fclose( $fp );
-			unlink( $zip_file_path );
+
+			// Action
+			do_action( 'alg_download_plugins_after_download', $zip_file_path );
+
 			die();
 		} else {
 			die( __( 'Unexpected error', 'download-plugins-dashboard' ) );
 		}
+	}
+
+	/**
+	 * Add 'Download ZIP' action to bulk actions.
+	 *
+	 * @version 1.9.1
+	 * @since   1.9.1
+	 */
+	function bulk_action( $actions ) {
+		$actions['download_zip_selected'] = __( 'Download ZIP', 'download-plugins-dashboard' );
+
+		return $actions;
+	}
+
+	/**
+	 * Modify the URL for bulk action redirection.
+	 *
+	 * @version 1.9.1
+	 * @since   1.9.1
+	 */
+	function bulk_action_download_plugin( $redirect_url ) {
+		$redirect_url = add_query_arg(
+			array(
+				'alg_download_plugin_bulk_action' => 'pro-version-message',
+			),
+			$redirect_url
+		);
+
+		return $redirect_url;
+	}
+
+	/**
+	 * Display bulk action notices based on query parameters.
+	 *
+	 * @version 1.9.1
+	 * @since   1.9.1
+	 */
+	function alg_download_plugin_bulk_action_notices() {
+		if ( ! isset( $_GET['alg_download_plugin_bulk_action'] ) ) {
+			return;
+		}
+
+		$action = sanitize_text_field( $_GET['alg_download_plugin_bulk_action'] );
+
+		switch ( $action ) {
+			case 'create-zip-error-message':
+				$this->create_zip_error_message();
+				break;
+			case 'system-requirements-error-message':
+				$this->system_requirements_error_message();
+				break;
+			case 'pro-version-message':
+				$this->pro_version_message();
+				break;
+		}
+	}
+
+	/**
+	 * Display a notice that the Pro version is required.
+	 *
+	 * @version 1.9.1
+	 * @since   1.9.1
+	 */
+	function pro_version_message() {
+		$message = sprintf( __( 'To use the Bulk Download ZIP, you will need the %s.', 'download-plugins-dashboard' ),
+			'<a target="_blank" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">'
+			.
+			__( 'Pro version', 'download-plugins-dashboard' ) . '</a>' );
+
+		echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
 	}
 
 }

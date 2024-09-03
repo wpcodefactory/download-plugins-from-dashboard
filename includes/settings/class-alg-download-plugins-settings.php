@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.9.0
+ * @version 1.9.1
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -266,7 +266,7 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.9.0
+	 * @version 1.9.1
 	 * @since   1.2.0
 	 */
 	function get_settings() {
@@ -355,6 +355,7 @@ class Alg_Download_Plugins_Settings {
 				'title'   => __( 'Advanced Settings', 'download-plugins-dashboard' ),
 				'id'      => 'advanced_settings_title',
 				'type'    => 'title',
+				'desc'    => apply_filters( 'alg_download_plugins_settings', $this->get_available_in_pro_version_html() ),
 			),
 			array(
 				'title'   => __( 'ZIP library', 'download-plugins-dashboard' ),
@@ -375,6 +376,14 @@ class Alg_Download_Plugins_Settings {
 				'id'      => 'temp_dir',
 				'type'    => 'text',
 				'default' => '',
+			),
+			array(
+				'title'             => __( 'Auto Delete ZIP files', 'download-plugins-dashboard' ),
+				'id'                => 'delete_zip',
+				'desc'              => sprintf( '<p class="description">%s</p>', __( 'Automatically delete ZIP file from server after download.', 'download-plugins-dashboard' ) ),
+				'type'              => 'select_yes_no',
+				'default'           => 'no',
+				'custom_attributes' => array( apply_filters( 'alg_download_plugins_settings', 'disabled' ) => apply_filters( 'alg_download_plugins_settings', 'disabled' ) ),
 			),
 			array(
 				'title'   => __( 'Download plugin link', 'download-plugins-dashboard' ),
