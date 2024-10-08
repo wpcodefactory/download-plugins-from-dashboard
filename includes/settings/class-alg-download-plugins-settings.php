@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.9.1
+ * @version 1.9.2
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -31,7 +31,7 @@ class Alg_Download_Plugins_Settings {
 	 */
 	function __construct() {
 		$this->id = 'alg_download_plugins_dashboard';
-		add_action( 'admin_menu',      array( $this, 'add_plugin_menu' ) );
+		add_action( 'admin_menu',      array( $this, 'add_plugin_menu' ), 90 );
 		add_action( 'admin_init',      array( $this, 'save_settings' ) );
 		add_action( 'admin_notices',   array( $this, 'admin_notices' ) );
 	}
@@ -62,16 +62,19 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * add_plugin_menu.
 	 *
-	 * @version 1.2.0
+	 * @version 1.9.2
 	 * @since   1.2.0
 	 */
 	function add_plugin_menu() {
-		add_options_page(
+		$admin_menu = WPFactory\WPFactory_Admin_Menu\WPFactory_Admin_Menu::get_instance();
+		\add_submenu_page(
+			$admin_menu->get_menu_slug(),
 			__( 'Download Plugins and Themes from Dashboard', 'download-plugins-dashboard' ),
-			__( 'Download Plugins and Themes', 'download-plugins-dashboard' ),
+			__( 'Download plugins and Themes', 'download-plugins-dashboard' ),
 			'manage_options',
 			'download-plugins-dashboard',
-			array( $this, 'output_plugin_menu' )
+			array( $this, 'output_plugin_menu' ),
+			30
 		);
 	}
 
@@ -266,7 +269,7 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * get_settings.
 	 *
-	 * @version 1.9.1
+	 * @version 1.9.2
 	 * @since   1.2.0
 	 */
 	function get_settings() {
@@ -338,7 +341,7 @@ class Alg_Download_Plugins_Settings {
 				'id'      => 'plugins_tools',
 				'type'    => 'tool',
 				'default' => '',
-				'desc'    => '<a href="' . add_query_arg( 'alg_download_plugin_all', true ) . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>' . ' ' .
+				'desc'    => '<a href="' . esc_url( add_query_arg( 'alg_download_plugin_all', true ) ) . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>' . ' ' .
 					'<br /><p class="description">' .
 						__( 'Please note that this won\'t include "Must-Use" and "Drop-in" plugins.', 'download-plugins-dashboard' ) . ' ' .
 						__( 'However, you can download them from "Plugins" page directly.', 'download-plugins-dashboard' ) .
@@ -349,7 +352,7 @@ class Alg_Download_Plugins_Settings {
 				'id'      => 'themes_tools',
 				'type'    => 'tool',
 				'default' => '',
-				'desc'    => '<a href="' . add_query_arg( 'alg_download_theme_all', true )  . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>',
+				'desc'    => '<a href="' . esc_url( add_query_arg( 'alg_download_theme_all', true ) )  . '" class="button">' . __( 'Download all', 'download-plugins-dashboard' ) . '</a>',
 			),
 			array(
 				'title'   => __( 'Advanced Settings', 'download-plugins-dashboard' ),

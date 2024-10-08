@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Main Plugin Class
  *
- * @version 1.8.4
+ * @version 1.9.2
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -67,7 +67,7 @@ final class Alg_Download_Plugins {
 	/**
 	 * Alg_Download_Plugins Constructor.
 	 *
-	 * @version 1.8.0
+	 * @version 1.9.2
 	 * @since   1.0.0
 	 *
 	 * @access  public
@@ -75,6 +75,8 @@ final class Alg_Download_Plugins {
 	 * @todo    [next] (dev) load everything on `is_admin()` only?
 	 */
 	function __construct() {
+		// Adds cross-selling library.
+		$this->add_cross_selling_library();
 
 		// Translation file
 		add_action( 'init', array( $this, 'localize' ) );
@@ -93,6 +95,24 @@ final class Alg_Download_Plugins {
 			add_filter( 'plugin_action_links_' . plugin_basename( ALG_DOWNLOAD_PLUGINS_FILE ), array( $this, 'action_links' ) );
 		}
 
+	}
+
+	/**
+	 * add_cross_selling_library.
+	 *
+	 * @version 1.9.2
+	 * @since   1.9.2
+	 *
+	 * @return void
+	 */
+	function add_cross_selling_library(){
+		if ( ! is_admin() ) {
+			return;
+		}
+		// Cross-selling library.
+		$cross_selling = new \WPFactory\WPFactory_Cross_Selling\WPFactory_Cross_Selling();
+		$cross_selling->setup( array( 'plugin_file_path'   => ALG_DOWNLOAD_PLUGINS_FILE ) );
+		$cross_selling->init();
 	}
 
 	/**

@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'aa498634ce5835d5892a28d3cf6a219343761a79',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'aa498634ce5835d5892a28d3cf6a219343761a79',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpfactory/wpfactory-admin-menu' => array(
+            'pretty_version' => 'v1.0.2',
+            'version' => '1.0.2.0',
+            'reference' => '89e0b637eb5af737dd4cba52a41797082cb0d7c9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wpfactory/wpfactory-admin-menu',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpfactory/wpfactory-cross-selling' => array(
+            'pretty_version' => 'v1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => '7157c3a9fcbf6ea5f1534cabe14de2db30c60601',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../wpfactory/wpfactory-cross-selling',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
