@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.9.2
+ * @version 1.9.3
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -62,7 +62,7 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * add_plugin_menu.
 	 *
-	 * @version 1.9.2
+	 * @version 1.9.3
 	 * @since   1.2.0
 	 */
 	function add_plugin_menu() {
@@ -71,7 +71,7 @@ class Alg_Download_Plugins_Settings {
 			$admin_menu->get_menu_slug(),
 			__( 'Download Plugins and Themes from Dashboard', 'download-plugins-dashboard' ),
 			__( 'Download plugins and Themes', 'download-plugins-dashboard' ),
-			'manage_options',
+			class_exists( 'WooCommerce' ) ? 'manage_woocommerce' : 'manage_options',
 			'download-plugins-dashboard',
 			array( $this, 'output_plugin_menu' ),
 			30
