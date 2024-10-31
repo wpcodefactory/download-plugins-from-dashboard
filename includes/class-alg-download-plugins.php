@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Main Plugin Class
  *
- * @version 1.9.2
+ * @version 1.9.4
  * @since   1.0.0
  *
  * @author  WPFactory
@@ -128,7 +128,7 @@ final class Alg_Download_Plugins {
 	/**
 	 * Show action links on the plugin screen.
 	 *
-	 * @version 1.8.0
+	 * @version 1.9.4
 	 * @since   1.3.0
 	 *
 	 * @param   mixed $links
@@ -136,7 +136,7 @@ final class Alg_Download_Plugins {
 	 */
 	function action_links( $links ) {
 		$custom_links   = array();
-		$custom_links[] = '<a href="' . admin_url( 'options-general.php?page=download-plugins-dashboard' ) . '">' . __( 'Settings', 'download-plugins-dashboard' ) . '</a>';
+		$custom_links[] = '<a href="' . admin_url( 'admin.php?page=download-plugins-dashboard' ) . '">' . __( 'Settings', 'download-plugins-dashboard' ) . '</a>';
 		if ( 'download-plugins-from-dashboard.php' === basename( ALG_DOWNLOAD_PLUGINS_FILE ) ) {
 			$custom_links[] = '<a target="_blank" style="font-weight: bold; color: green;" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">' .
 				__( 'Go Pro', 'download-plugins-dashboard' ) . '</a>';
