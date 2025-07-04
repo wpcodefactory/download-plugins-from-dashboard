@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
-Tested up to: 6.6
-Stable tag: 1.9.4
+Tested up to: 6.8
+Stable tag: 1.9.5
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -138,7 +138,7 @@ WPFactory has a diverse range of plugins tailored to enhance your experience:
 4. After the installation is complete, click “Activate”.
 
 **Post-Activation:**
-Once activated, access the plugin's settings by navigating to “WooCommerce > Settings” and look for the relevant tab.
+Once activated, access the plugin's settings by navigating to “WPFactory” and look for the relevant tab.
 
 
 == Screenshots ==
@@ -148,6 +148,13 @@ Once activated, access the plugin's settings by navigating to “WooCommerce > S
 3. Settings.
 
 == Changelog ==
+
+= 1.9.5 - 04/07/2025 =
+* Dev - WPFactory Admin Menu - Library updated.
+* Dev - WPFactory Key Manager - Library updated.
+* Dev - WPFactory Key Manager - Moved to the `init` hook.
+* Dev - WPFactory Recommendations - Moved to the `init` hook.
+* Tested up to: 6.8.
 
 = 1.9.4 - 31/10/2024 =
 * Dev - Updated cross-selling library with correct plugin names.
