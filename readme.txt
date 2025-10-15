@@ -1,9 +1,9 @@
 === Download Plugins and Themes in ZIP from Dashboard ===
-Contributors: wpcodefactory, omardabbas, karzin, anbinder, algoritmika, kousikmukherjeeli
+Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
 Tested up to: 6.8
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -148,6 +148,12 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 3. Settings.
 
 == Changelog ==
+
+= 1.9.6 - 15/10/2025 =
+* Dev - Admin menu library updated to version 1.0.8.
+* Dev - Cross-selling library updated to version 1.0.6.
+* Dev - Key Manager library updated to version 1.0.8.
+* Removed Algoritmika from contributors.
 
 = 1.9.5 - 04/07/2025 =
 * Dev - WPFactory Admin Menu - Library updated.
