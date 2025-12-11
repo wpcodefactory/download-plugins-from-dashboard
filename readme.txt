@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
-Tested up to: 6.8
-Stable tag: 1.9.6
+Tested up to: 6.9
+Stable tag: 1.9.7
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -16,11 +16,11 @@ Download installed plugins and themes in ZIP files directly from your WordPress 
 
 [Main Page](https://wpfactory.com/item/download-plugins-and-themes-from-dashboard-wordpress-plugin/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "Main Page") | [Support Forum](https://wpfactory.com/support/item/download-plugins-and-themes-from-dashboard-wordpress-plugin/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "Support Forum") | [Documentation & How to](https://wpfactory.com/docs/download-plugins-and-themes-from-dashboard-wordpress-plugin/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "Documentation & How to")
 
-Have you ever found yourself in a need to download a plugin or theme file directly from your WordPress admin dashboard, only to discover you lack FTP or cPanel access? 
+Have you ever found yourself in a need to download a plugin or theme file directly from your WordPress admin dashboard, only to discover you lack FTP or cPanel access?
 
 This is basically why we created this plugin, to simplify the process for you, so that with just a single click (literally), you can effortlessly download any plugin or theme right from your dashboard, no technical hurdles or external tools required.
 
-But that's not all. Imagine you've customized a plugin to suit your site's unique needs, only to realize you want to use those modifications elsewhere. With our plugin, you can easily download those customized files, ensuring your hard work is preserved and easily transferable. 
+But that's not all. Imagine you've customized a plugin to suit your site's unique needs, only to realize you want to use those modifications elsewhere. With our plugin, you can easily download those customized files, ensuring your hard work is preserved and easily transferable.
 
 Say goodbye to complex file management and hello to seamless plugin and theme downloads, all from within your WordPress admin interface.
 
@@ -149,10 +149,15 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 
 == Changelog ==
 
+= 1.9.7 - 11/12/2025 =
+* Dev - Security - Add nonces to the `bulk` downloads.
+* Dev - Coding standards improved.
+* Tested up to: 6.9.
+
 = 1.9.6 - 15/10/2025 =
 * Dev - Admin menu library updated to version 1.0.8.
 * Dev - Cross-selling library updated to version 1.0.6.
-* Dev - Key Manager library updated to version 1.0.8.
+* Dev - Key Manager library updated to version 1.0.7.
 * Removed Algoritmika from contributors.
 
 = 1.9.5 - 04/07/2025 =

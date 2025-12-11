@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.9.1
+ * @version 1.9.7
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -41,32 +41,32 @@ class Alg_Download_Plugins_Core {
 	 */
 	function __construct() {
 		// Links.
-		add_filter( 'plugin_action_links',                       array( $this, 'add_plugin_download_action_links' ), PHP_INT_MAX, 4 );
-		add_action( 'admin_enqueue_scripts',                     array( $this, 'add_theme_download_links' ) );
+		add_filter( 'plugin_action_links', array( $this, 'add_plugin_download_action_links' ), PHP_INT_MAX, 4 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_theme_download_links' ) );
 
 		// Core.
-		add_action( 'admin_init',                                array( $this, 'download_plugin' ) );
-		add_action( 'admin_init',                                array( $this, 'download_theme' ) );
-		add_action( 'admin_init',                                array( $this, 'download_plugin_bulk' ) );
-		add_action( 'admin_init',                                array( $this, 'download_theme_bulk' ) );
+		add_action( 'admin_init', array( $this, 'download_plugin' ) );
+		add_action( 'admin_init', array( $this, 'download_theme' ) );
+		add_action( 'admin_init', array( $this, 'download_plugin_bulk' ) );
+		add_action( 'admin_init', array( $this, 'download_theme_bulk' ) );
 
 		// Tools.
-		add_action( 'admin_init',                                array( $this, 'download_plugin_all' ) );
-		add_action( 'admin_init',                                array( $this, 'download_theme_all' ) );
+		add_action( 'admin_init', array( $this, 'download_plugin_all' ) );
+		add_action( 'admin_init', array( $this, 'download_theme_all' ) );
 
 		// Crons.
-		add_filter( 'cron_schedules',                            array( $this, 'cron_add_custom_intervals' ) );
-		add_action( 'alg_download_plugins_cron',                 array( $this, 'cron_alg_download_plugins' ) );
-		add_action( 'alg_download_themes_cron',                  array( $this, 'cron_alg_download_themes' ) );
-		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_schedule_plugins_event' ) );
-		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_plugins_event' ) );
-		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_schedule_themes_event' ) );
-		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE,   array( $this, 'cron_unschedule_themes_event' ) );
+		add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
+		add_action( 'alg_download_plugins_cron', array( $this, 'cron_alg_download_plugins' ) );
+		add_action( 'alg_download_themes_cron', array( $this, 'cron_alg_download_themes' ) );
+		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE, array( $this, 'cron_schedule_plugins_event' ) );
+		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE, array( $this, 'cron_unschedule_plugins_event' ) );
+		register_activation_hook(   ALG_DOWNLOAD_PLUGINS_FILE, array( $this, 'cron_schedule_themes_event' ) );
+		register_deactivation_hook( ALG_DOWNLOAD_PLUGINS_FILE, array( $this, 'cron_unschedule_themes_event' ) );
 
 		// Plugin and theme version.
 		add_filter( 'alg_download_plugins_version_separator_char', array( $this, 'change_version_separator' ) );
 
-		// Bulk Action
+		// Bulk Action.
 		add_filter( 'bulk_actions-plugins', array( $this, 'bulk_action' ) );
 		add_filter( 'handle_bulk_actions-plugins', array( $this, 'bulk_action_download_plugin' ), 10, 1 );
 		add_action( 'admin_notices', array( $this, 'alg_download_plugin_bulk_action_notices' ) );
@@ -378,16 +378,39 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_theme_bulk.
 	 *
-	 * @version 1.4.0
+	 * @version 1.9.7
 	 * @since   1.4.0
 	 */
 	function download_theme_bulk( $is_cron = false ) {
-		if ( $is_cron || ( isset( $_GET['alg_download_theme_bulk'] ) && is_user_logged_in() && current_user_can( 'switch_themes' ) ) ) {
+		if (
+			$is_cron ||
+			(
+				isset( $_GET['alg_download_theme_bulk'] ) &&
+				is_user_logged_in() &&
+				current_user_can( 'switch_themes' )
+			)
+		) {
+
+			if (
+				! $is_cron &&
+				(
+					! isset( $_GET['_alg_download_theme_bulk_nonce'] ) ||
+					! wp_verify_nonce(
+						sanitize_text_field( wp_unslash( $_GET['_alg_download_theme_bulk_nonce'] ) ),
+						'alg_download_theme_bulk_action'
+					)
+				)
+			) {
+				wp_die( esc_html__( 'Link expired.', 'download-plugins-dashboard' ) );
+			}
+
 			$themes            = array();
 			$do_append_version = ( 'yes' === get_option( 'alg_download_plugins_dashboard_themes_append_version', 'no' ) );
+
 			foreach ( wp_get_themes() as $theme => $theme_object ) {
 				$themes[ $theme ] = ( $do_append_version ? $theme_object->get( 'Version' ) : '' );
 			}
+
 			if ( ! empty( $themes ) ) {
 				$this->download_plugin_or_theme_bulk(
 					get_theme_root(),
@@ -399,26 +422,56 @@ class Alg_Download_Plugins_Core {
 					get_option( 'alg_download_plugins_dashboard_themes_bulk_dir', $this->get_uploads_dir( 'themes-archive' ) )
 				);
 			}
+
 			if ( ! $is_cron ) {
-				wp_safe_redirect( add_query_arg( 'alg_download_theme_bulk_finished', true, remove_query_arg( 'alg_download_theme_bulk' ) ) );
+				wp_safe_redirect(
+					add_query_arg(
+						'alg_download_theme_bulk_finished',
+						true,
+						remove_query_arg( 'alg_download_theme_bulk' )
+					)
+				);
 				exit;
 			}
+
 		}
 	}
 
 	/**
 	 * download_plugin_bulk.
 	 *
-	 * @version 1.5.0
+	 * @version 1.9.7
 	 * @since   1.4.0
 	 *
 	 * @todo    [later] (dev) `mustuse` and `dropins`
 	 * @todo    [later] (dev) single file plugins
 	 */
 	function download_plugin_bulk( $is_cron = false ) {
-		if ( $is_cron || ( isset( $_GET['alg_download_plugin_bulk'] ) && is_user_logged_in() && current_user_can( 'activate_plugins' ) ) ) {
+		if (
+			$is_cron ||
+			(
+				isset( $_GET['alg_download_plugin_bulk'] ) &&
+				is_user_logged_in() &&
+				current_user_can( 'activate_plugins' )
+			)
+		) {
+
+			if (
+				! $is_cron &&
+				(
+					! isset( $_GET['_alg_download_plugin_bulk_nonce'] ) ||
+					! wp_verify_nonce(
+						sanitize_text_field( wp_unslash( $_GET['_alg_download_plugin_bulk_nonce'] ) ),
+						'alg_download_plugin_bulk_action'
+					)
+				)
+			) {
+				wp_die( esc_html__( 'Link expired.', 'download-plugins-dashboard' ) );
+			}
+
 			$plugins           = array();
 			$do_append_version = ( 'yes' === get_option( 'alg_download_plugins_dashboard_plugins_append_version', 'no' ) );
+
 			foreach ( $this->get_plugins( 'regular' ) as $plugin_file => $plugin_data ) {
 				$plugin = explode( '/', $plugin_file );
 				if ( isset( $plugin[1] ) ) {
@@ -426,6 +479,7 @@ class Alg_Download_Plugins_Core {
 					$plugins[ $plugin ] = ( $do_append_version ? $plugin_data['Version'] : '' );
 				}
 			}
+
 			if ( ! empty( $plugins ) ) {
 				$this->download_plugin_or_theme_bulk(
 					$this->get_plugin_dir( 'regular' ),
@@ -437,10 +491,18 @@ class Alg_Download_Plugins_Core {
 					get_option( 'alg_download_plugins_dashboard_plugins_bulk_dir', $this->get_uploads_dir( 'plugins-archive' ) )
 				);
 			}
+
 			if ( ! $is_cron ) {
-				wp_safe_redirect( add_query_arg( 'alg_download_plugin_bulk_finished', true, remove_query_arg( 'alg_download_plugin_bulk' ) ) );
+				wp_safe_redirect(
+					add_query_arg(
+						'alg_download_plugin_bulk_finished',
+						true,
+						remove_query_arg( 'alg_download_plugin_bulk' )
+					)
+				);
 				exit;
 			}
+
 		}
 	}
 
@@ -570,20 +632,26 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * system_requirements_error_message.
 	 *
-	 * @version 1.4.0
+	 * @version 1.9.7
 	 * @since   1.1.0
 	 */
 	function system_requirements_error_message() {
-		$message     = __( 'To use %s plugin, %s must be available on your server.', 'download-plugins-dashboard' );
+
+		/* Translators: %1$s: Plugin name, %2$s: Requirement name. */
+		$message = __( 'To use %1$s plugin, %2$s must be available on your server.', 'download-plugins-dashboard' );
+
 		$plugin_name = '<strong>' . __( 'Download Plugins and Themes from Dashboard', 'download-plugins-dashboard' ) . '</strong>';
+
 		if ( ! class_exists( 'RecursiveIteratorIterator' ) ) {
 			$required = '<code>RecursiveIteratorIterator</code>';
 			echo '<div class="notice notice-error"><p>' . sprintf( $message, $plugin_name, $required ) . '</p></div>';
 		}
+
 		if ( ! function_exists( 'gzopen' ) ) {
 			$required = '<code>zlib</code>';
 			echo '<div class="notice notice-error"><p>' . sprintf( $message, $plugin_name, $required ) . '</p></div>';
 		}
+
 	}
 
 	/**
@@ -594,8 +662,13 @@ class Alg_Download_Plugins_Core {
 	 */
 	function create_zip_error_message() {
 		echo '<div class="notice notice-error"><p>' .
-			( ! empty( $this->last_error ) ?
-				sprintf(  __( 'Error: %s', 'download-plugins-dashboard' ), $this->last_error ) :
+			(
+				! empty( $this->last_error ) ?
+				sprintf(
+					/* Translators: %s: Error message. */
+					__( 'Error: %s', 'download-plugins-dashboard' ),
+					$this->last_error
+				) :
 				__( 'Something went wrong...', 'download-plugins-dashboard' )
 			) .
 		'</p></div>';
@@ -677,7 +750,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * create_zip_ziparchive.
 	 *
-	 * @version 1.4.1
+	 * @version 1.9.7
 	 * @since   1.3.0
 	 *
 	 * @todo    [maybe] (dev) check `new ZipArchive`, `$zip->addFile`, `$zip->close` for errors
@@ -685,8 +758,12 @@ class Alg_Download_Plugins_Core {
 	function create_zip_ziparchive( $args, $files ) {
 		$zip = new ZipArchive();
 		if ( true !== ( $result = $zip->open( $args['zip_file_path'], ZipArchive::CREATE | ZipArchive::OVERWRITE ) ) ) {
-			$this->last_error = sprintf( __( '%s can not open a new zip archive (error code %s).', 'download-plugins-dashboard' ),
-				'<code>ZipArchive</code>', '<code>' . $result . '</code>' );
+			$this->last_error = sprintf(
+				/* Translators: %1$s: "ZipArchive", %2$s: Error code. */
+				__( '%1$s can not open a new zip archive (error code %2$s).', 'download-plugins-dashboard' ),
+				'<code>ZipArchive</code>',
+				'<code>' . $result . '</code>'
+			);
 			return false;
 		}
 		$exclude_from_relative_path = strlen( $args['exclude_path'] ) + 1;
@@ -813,10 +890,13 @@ class Alg_Download_Plugins_Core {
 	 * @since   1.9.1
 	 */
 	function pro_version_message() {
-		$message = sprintf( __( 'To use the Bulk Download ZIP, you will need the %s.', 'download-plugins-dashboard' ),
-			'<a target="_blank" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">'
-			.
-			__( 'Pro version', 'download-plugins-dashboard' ) . '</a>' );
+		$message = sprintf(
+			/* Translators: %s: Plugin link. */
+			__( 'To use the Bulk Download ZIP, you will need the %s.', 'download-plugins-dashboard' ),
+			'<a target="_blank" href="https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/">' .
+				__( 'Pro version', 'download-plugins-dashboard' ) .
+			'</a>'
+		);
 
 		echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
 	}
