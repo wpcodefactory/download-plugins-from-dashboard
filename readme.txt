@@ -158,7 +158,6 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 * Dev - Admin menu library updated to version 1.0.8.
 * Dev - Cross-selling library updated to version 1.0.6.
 * Dev - Key Manager library updated to version 1.0.7.
-* Removed Algoritmika from contributors.
 
 = 1.9.5 - 04/07/2025 =
 * Dev - WPFactory Admin Menu - Library updated.
