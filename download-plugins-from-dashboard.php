@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Download Plugins and Themes from Dashboard
+Plugin Name: Download Plugins and Themes in ZIP from Dashboard
 Plugin URI: https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/
 Description: Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP.
-Version: 1.9.8
+Version: 1.9.9
 Author: WPFactory
 Author URI: https://wpfactory.com
 Text Domain: download-plugins-dashboard
@@ -38,7 +38,7 @@ if ( 'download-plugins-from-dashboard.php' === basename( __FILE__ ) ) {
 
 // Plugin version constant
 if ( ! defined( 'ALG_DOWNLOAD_PLUGINS_VERSION' ) ) {
-	define( 'ALG_DOWNLOAD_PLUGINS_VERSION', '1.9.8' );
+	define( 'ALG_DOWNLOAD_PLUGINS_VERSION', '1.9.9' );
 }
 
 // Plugin file constant

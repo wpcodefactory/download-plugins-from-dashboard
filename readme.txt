@@ -3,7 +3,7 @@ Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
 Tested up to: 6.9
-Stable tag: 1.9.8
+Stable tag: 1.9.9
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -61,7 +61,7 @@ ___
 
 ## 🏆 Do More: PRO Version##
 
-If you want to go further, you can get the premium version of [Quantity Dynamic Pricing & Bulk Discounts for WooCommerce](https://wpfactory.com/item/product-price-by-quantity-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme) plugin.
+If you want to go further, you can get the premium version of [Download Plugins and Themes in ZIP from Dashboard](https://wpfactory.com/item/download-plugins-and-themes-from-dashboard-wordpress-plugin//?utm_source=wporg&utm_medium=organic&utm_campaign=readme) plugin.
 
 ### 🏆 Set Periodical Plugins and/or Themes Downloads ###
 
@@ -148,6 +148,9 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 3. Settings.
 
 == Changelog ==
+
+= 1.9.9 - 22/12/2025 =
+* Fix - Pro version name and link.
 
 = 1.9.8 - 17/12/2025 =
 * Fix - "Documentation & How to" link fixed in the readme.txt.

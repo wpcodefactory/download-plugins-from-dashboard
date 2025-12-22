@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Settings Class
  *
- * @version 1.9.3
+ * @version 1.9.9
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -81,12 +81,12 @@ class Alg_Download_Plugins_Settings {
 	/**
 	 * output_plugin_menu.
 	 *
-	 * @version 1.8.9
+	 * @version 1.9.9
 	 * @since   1.2.0
 	 */
 	function output_plugin_menu() {
 		echo '<div class="wrap">' .
-			'<h2>' . __( 'Download Plugins and Themes from Dashboard', 'download-plugins-dashboard' ) . '</h2>' .
+			'<h2>' . __( 'Download Plugins and Themes in ZIP from Dashboard', 'download-plugins-dashboard' ) . '</h2>' .
 			'<form action="" method="post">' .
 				$this->get_fields_html() .
 				'<p class="submit">' .
