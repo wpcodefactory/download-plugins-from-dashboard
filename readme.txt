@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
 Tags: download, plugin, download plugin, download theme, theme
 Requires at least: 3.1
-Tested up to: 6.9
-Stable tag: 1.9.9
+Tested up to: 7.0
+Stable tag: 2.0.0
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -148,6 +148,9 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 3. Settings.
 
 == Changelog ==
+
+= 2.0.0 - 24/05/2026 =
+* Tested up to: 7.0.
 
 = 1.9.9 - 22/12/2025 =
 * Fix - Pro version name and link.
