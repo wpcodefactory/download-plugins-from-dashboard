@@ -1,22 +1,23 @@
+name: Deploy to WordPress.org
 on:
   push:
     tags:
-      - '*'
-
+      - "*"
 jobs:
-  test-action:
+  tag:
+    name: New tag
     runs-on: ubuntu-latest
-    name: Upload tag to WPFactory
     steps:
-
-      - uses: wpcodefactory/wpfactory-product-updater-github-action@master
-        id: update
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          api_token: ${{ secrets.WPFACTORY_PRODUCT_UPDATER_API_TOKEN }}
-          product_id: 8864
-          product_filename: download-plugins-from-dashboard
-
-      - name: WP API Response
-        if: always()
-        run: echo Response from URL - ${{ steps.update.outputs.response }}
+      - uses: actions/checkout@master
+      - name: Build
+        run: |
+      - name: Install SVN ( Subversion )
+        run: |
+          sudo apt-get update
+          sudo apt-get install subversion
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: ${{ secrets.SVN_PLUGIN_SLUG }}
