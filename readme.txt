@@ -1,14 +1,14 @@
 === Download Plugins and Themes in ZIP from Dashboard ===
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
-Tags: download, plugin, download plugin, download theme, theme
-Requires at least: 3.1
+Tags: download, download plugin, download theme, download plugin zip, download theme zip
+Requires at least: 4.5
 Tested up to: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Download installed plugins and themes in ZIP files directly from your WordPress admin dashboard, download any or all plugins & themes without FTP or cPanel access
+Download installed plugins and themes in ZIP files directly from your WordPress admin dashboard, download any or all without FTP or cPanel access.
 
 == Description ==
 
@@ -106,7 +106,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience:
 
 * [**Automated Order Status Controller for WooCommerce**](https://wpfactory.com/item/order-status-rules-for-woocommerce/?utm_source=wporg&utm_medium=organic&utm_campaign=readme "**Automated Order Status Controller for WooCommerce**"): Change order statuses programmatically based on a wide range of conditions, like time intervals, user roles and more! (**[Free version](https://wordpress.org/plugins/order-status-rules-for-woocommerce/ "Free version")**)
 
-
 > “Right on – job done fast and efficiently!:This plugin is just awesome. It does the job as stated in the tin! Kudos to the devs.” – ⭐⭐⭐⭐⭐ [danielepais](https://wordpress.org/support/topic/right-on-job-done-fast-and-efficiently-5/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
 
 > “Brilliant!!!:I had deleted a plugin that I bought and their website doesn’t allow you to log in and download. But I did remember a website that had the plugin. Installed this plugin and downloaded the plugin I was needing in an instant. Well done!” – ⭐⭐⭐⭐⭐ [brand9](https://wordpress.org/support/topic/brilliant-1311/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
@@ -114,7 +113,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience:
 > “Life saver:Thank you for this fantastic plugin, it is a life saver for those who don’t have FTP capabilities.” – ⭐⭐⭐⭐⭐ [Gabriel Reguly](https://wordpress.org/support/topic/life-saver-316/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
 
 > “Greatly Usable!:Being a WordPress developer I often need to download the themes and plugins from the sites. When I do not have any other details except the site URL and login, then comes the role of this well functional and greatly usable plugin.” – ⭐⭐⭐⭐⭐ [Ritu Singh](https://wordpress.org/support/topic/greatly-usable/?utm_source=wporg&utm_medium=organic&utm_campaign=readme)
-
 
 == Installation ==
 
@@ -140,7 +138,6 @@ WPFactory has a diverse range of plugins tailored to enhance your experience:
 **Post-Activation:**
 Once activated, access the plugin's settings by navigating to “WPFactory” and look for the relevant tab.
 
-
 == Screenshots ==
 
 1. Plugin "Download ZIP" links in "Plugins > Installed Plugins".
@@ -148,6 +145,21 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 3. Settings.
 
 == Changelog ==
+
+= 2.1.0 - 24/07/2026 =
+* Fix - Security - Output escaped.
+* Fix - Security - Input sanitized.
+* Fix - Security - Nonces added.
+* Fix - Pro plugin link updated.
+* Dev - Plugin init moved to the `plugins_loaded` action.
+* Dev - CSS moved to an external file.
+* Dev - WPFactory Cross-Selling - Library updated (to v1.1.3).
+* Dev - WPFactory Admin Menu - Library updated (to v1.1.1).
+* Dev - WPFactory Key Manager - Library updated (to v1.0.9).
+* Dev - Plugin icon added to the settings page.
+* Dev - Code refactoring.
+* Dev - Coding standards improved.
+* Requires at least: 4.5.
 
 = 2.0.0 - 24/05/2026 =
 * Tested up to: 7.0.
