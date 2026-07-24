@@ -147,18 +147,21 @@ if ( ! class_exists( 'Alg_Download_Plugins_Settings' ) ) :
 						'step'        => true,
 						'placeholder' => true,
 						'maxlength'   => true,
+						'disabled'    => true,
 					),
 
 					'select' => array(
-						'id'    => true,
-						'name'  => true,
-						'style' => true,
-						'class' => true,
+						'id'       => true,
+						'name'     => true,
+						'style'    => true,
+						'class'    => true,
+						'disabled' => true,
 					),
 
 					'option' => array(
 						'value'    => true,
 						'selected' => true,
+						'disabled' => true,
 					),
 
 				)
