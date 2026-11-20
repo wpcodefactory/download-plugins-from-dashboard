@@ -2,8 +2,8 @@
 Contributors: wpcodefactory, omardabbas, karzin, anbinder, kousikmukherjeeli
 Tags: download, download plugin, download theme, download plugin zip, download theme zip
 Requires at least: 4.5
-Tested up to: 7.0
-Stable tag: 2.1.0
+Tested up to: 7.1
+Stable tag: 2.1.1
 Requires PHP: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -145,6 +145,12 @@ Once activated, access the plugin's settings by navigating to “WPFactory” an
 3. Settings.
 
 == Changelog ==
+
+= 2.1.1 - 20/11/2026 =
+* Dev - Upgraded wpfactory/wpfactory-admin-menu (v1.1.1 => v1.1.4).
+* Dev - Upgraded wpfactory/wpfactory-cross-selling (v1.1.3 => v1.1.7).
+* Dev - Upgraded wpfactory/wpfactory-key-manager (v1.0.9 => v1.1.1).
+* Tested up to: 7.1.
 
 = 2.1.0 - 24/07/2026 =
 * Fix - Security - Output escaped.

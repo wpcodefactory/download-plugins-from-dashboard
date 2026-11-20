@@ -2,41 +2,35 @@
 # This file is distributed under the GNU General Public License v3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Download Plugins and Themes in ZIP from Dashboard 2.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/download-plugins-from-dashboard\n"
+"Project-Id-Version: download-plugins-dashboard 2.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/download-plugins-dashboard\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-24T15:48:11+00:00\n"
+"POT-Creation-Date: 2026-11-20T19:39:28+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: download-plugins-dashboard\n"
 
 #. Plugin Name of the plugin
-#: download-plugins-from-dashboard.php
-#: includes/settings/class-alg-download-plugins-settings.php:92
-msgid "Download Plugins and Themes in ZIP from Dashboard"
+msgid "Download Plugins and Themes in ZIP from Dashboard Pro"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: download-plugins-from-dashboard.php
 msgid "https://wpfactory.com/item/download-plugins-and-themes-from-dashboard-wordpress-plugin/"
 msgstr ""
 
 #. Description of the plugin
-#: download-plugins-from-dashboard.php
 msgid "Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP."
 msgstr ""
 
 #. Author of the plugin
-#: download-plugins-from-dashboard.php
 msgid "WPFactory"
 msgstr ""
 
 #. Author URI of the plugin
-#: download-plugins-from-dashboard.php
 msgid "https://wpfactory.com"
 msgstr ""
 
@@ -136,6 +130,10 @@ msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:54
 msgid "Download plugins and Themes"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:92
+msgid "Download Plugins and Themes in ZIP from Dashboard"
 msgstr ""
 
 #: includes/settings/class-alg-download-plugins-settings.php:106
